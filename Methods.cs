@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace Program
 {
     class Methods
@@ -127,8 +128,8 @@ namespace Program
         public static byte[] Koordinata(string bekeres)
         {
             byte[] tomb = new byte[2];
-            tomb[0] = Convert.ToByte(bekeres.Split(',')[0]);
-            tomb[1] = Convert.ToByte(bekeres.Split(',')[1]);
+            tomb[0] = Convert.ToByte(bekeres.Split(';')[0]);
+            tomb[1] = Convert.ToByte(bekeres.Split(';')[1]);
 
             return tomb;
         }

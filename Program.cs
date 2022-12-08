@@ -1,12 +1,25 @@
 ﻿using System;
 
-namespace ConsoleApp1
+namespace Program
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.CursorVisible = false;
+
+            switch (Console.ReadLine())
+            {
+                case "jatek":
+                    //Jatek.Jatek();
+                    break;
+                case "palya":
+                    T.TerkepMain();
+                    break;
+                default:
+                    T.TerkepMain();
+                    break;
+            }
         }
     }
 }
