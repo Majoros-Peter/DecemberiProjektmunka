@@ -86,7 +86,7 @@ namespace Program
             {
                 for (int oszlopIndex = 0; oszlopIndex < map.GetLength(1); oszlopIndex++)
                 {
-                    continue;
+                  
                 }
             }
             List<string> unavailables = new List<string>();
@@ -105,6 +105,14 @@ namespace Program
         {
             
             return null;
+        }
+        public static byte[] Koordinata(string bekeres)
+        {
+            byte[] tomb = new byte[2];
+            tomb[0] = Convert.ToByte(bekeres.Split(',')[0]);
+            tomb[1] = Convert.ToByte(bekeres.Split(',')[1]);
+
+            return tomb;
         }
     }
 }
