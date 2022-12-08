@@ -1,5 +1,4 @@
 ># DecemberiProjektmunka
-># ⠀
 >### Indításhoz a **Program.cs**-t kell elindítani
 ># ⠀
 >>### Készítette:
