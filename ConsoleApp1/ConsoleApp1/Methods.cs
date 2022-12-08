@@ -86,7 +86,25 @@ namespace Program
             {
                 for (int oszlopIndex = 0; oszlopIndex < map.GetLength(1); oszlopIndex++)
                 {
-                  
+                    switch (map[sorIndex, oszlopIndex])
+                    {
+                        case '╔':
+                            //if (map[sorIndex+1, oszlopIndex].Contains(jobbraLehet) && map[sorIndex, oszlopIndex+1].Contains(lefeleLehet))
+                            //else 
+                            break;
+                        case '╗':
+                            //if (map[sorIndex-1, oszlopIndex].Contains(balraLehet)  && map[sorIndex, oszlopIndex+1].Contains(lefeleLehet))
+                            //else 
+                            break;
+                        case '╝':
+                            //if (map[sorIndex-1, oszlopIndex].Contains(balraLehet) && map[sorIndex, oszlopIndex-1].Contains(felfeleLehet))
+                            //else 
+                            break;
+                        case '╚':
+                            //if (map[sorIndex+1, oszlopIndex].Contains(jobbraLehet) && map[sorIndex, oszlopIndex-1].Contains(felfeleLehet))
+                            //else 
+                            break;
+                    }
                 }
             }
             List<string> unavailables = new List<string>();
