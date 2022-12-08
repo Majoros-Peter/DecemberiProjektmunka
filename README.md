@@ -1,8 +1,8 @@
 > # DecemberiProjektmunka
-<br>
+> <br>
 > ### Indításhoz a Program.cs-t kell indítani.
-<br>
----
+> <br>
+> ---
 > #### Munkamegosztás
 > - Majoros Péter: **Terkep.cs**
 > - Hegedüs Gergő: **Jatek.cs**
