@@ -133,5 +133,10 @@ namespace Program
 
             return tomb;
         }
+
+        public static string Koordinata(byte egyikSzam, byte masikSzam)
+        {
+            return Convert.ToString(egyikSzam)+";"+Convert.ToString(masikSzam);
+        }
     }
 }
