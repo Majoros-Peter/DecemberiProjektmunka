@@ -1,5 +1,5 @@
 ># DecemberiProjektmunka
->### A játék indításhoz vagy a ***Jatek.cs***-t, a pálya szerkesztéshez a ***Terkep.cs***-t kell elindítani
+>### A ***Program.cs***-t kell elindtani.
 ># ⠀
 >>### Készítette:
 >>- Majoros Péter ***Terkep.cs***
