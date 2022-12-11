@@ -1,10 +1,13 @@
-namespace Program
+using System;
+using Methods;
+
+namespace Jatek
 {
-    class Terkep
+    class J
     {
-        static void Jatek()
+        static void Main(string[] args)
         {
-        
+            
         }
     }
 }

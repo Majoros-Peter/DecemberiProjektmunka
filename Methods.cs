@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Program
+namespace Methods
 {
-    class Methods
+    class M
     {
         /// <summary>
         /// Megadja, hogy hány termet tartamaz a térkép

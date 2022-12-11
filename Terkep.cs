@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Methods;
 
-namespace Program
+namespace Terkep
 {
     class T
     {
@@ -11,9 +12,9 @@ namespace Program
         public static byte bekezdes;
         public static Random rnd = new Random();
 
-        public static void TerkepMain()
+        public static void Main(string[] args)
         {
-            Console.Clear();
+            Console.CursorVisible = false;
             Console.WriteLine("[s]aját pálya készítése\n[g]enerálás\n[m]eglévő pályán módosítás");
             switch (Console.ReadKey(true).Key)
             {
@@ -36,7 +37,7 @@ namespace Program
         {
 
             Console.Write("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): ");
-            byte[] szelMag = Methods.Koordinata(Console.ReadLine());
+            byte[] szelMag = M.Koordinata(Console.ReadLine());
             matrix = new char[szelMag[0], szelMag[1]];
             bekezdes = (byte)((Console.WindowWidth-szelMag[0])/2);
             byte[] koord = { 0, 0 };
@@ -301,7 +302,7 @@ namespace Program
             return szomszedok;
         }
         
-        static void Koordinata(byte[] koord)
+        static void KiirKoordinata(byte[] koord)
         {
             Console.SetCursorPosition(bekezdes, matrix.GetLength(1)+2);
             Console.Write("       ");
