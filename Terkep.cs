@@ -6,15 +6,15 @@ namespace Terkep
 {
     class T
     {
-        public static bool vege = false;
-        public static char[,] karakterek = { { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔'}, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } };
-        public static char[,] matrix;
-        public static byte bekezdes;
-        public static Random rnd = new Random();
+        private static bool vege = false;
+        private static char[,] karakterek = { { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔'}, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } };
+        private static char[,] matrix;
+        private static byte bekezdes;
+        private static Random rnd = new Random();
 
-        public static void Main(string[] args)
+        public static void TerkepMain()
         {
-            Console.CursorVisible = false;
+            Console.Clear();
             Console.WriteLine("[s]aját pálya készítése\n[g]enerálás\n[m]eglévő pályán módosítás");
             switch (Console.ReadKey(true).Key)
             {
@@ -33,7 +33,7 @@ namespace Terkep
             }
         }
 
-        static void SajatPalya()
+        private static void SajatPalya()
         {
 
             Console.Write("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): ");
@@ -74,13 +74,13 @@ namespace Terkep
         }
 
         //W.I.P
-        static void GeneralPalya()
+        private static void GeneralPalya()
         {
             Console.Write("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): ");
-            byte[] szelMag = Methods.Koordinata(Console.ReadLine());
+            byte[] szelMag = M.Koordinata(Console.ReadLine());
             matrix = new char[szelMag[0], szelMag[1]];
             Console.Write("Adja meg a pálya kezdőkoordinátáját ;-vel elválasztva (x;y): ");
-            byte[] koord = Methods.Koordinata(Console.ReadLine());
+            byte[] koord = M.Koordinata(Console.ReadLine());
 
 
             for (byte sor = 0; sor < matrix.GetLength(0); sor++)
@@ -92,12 +92,12 @@ namespace Terkep
         }
 
         //W.I.P
-        static void MeglevoModositas()
+        private static void MeglevoModositas()
         {
             Console.WriteLine("W.I.P");
         }
 
-        static void PalyaRajzol()
+        private static void PalyaRajzol()
         {
             Console.SetCursorPosition(0, 0);
             for (byte oszlop = 0; oszlop < matrix.GetLength(1); oszlop++)
@@ -110,7 +110,7 @@ namespace Terkep
             }
         }
 
-        static void ElemekRajzol()
+        private static void ElemekRajzol()
         {
             byte bekezdes = (byte)((Console.WindowWidth-30)/2);
             for (byte index = 0; index < 5; index++)
@@ -132,7 +132,7 @@ namespace Terkep
             }
         }
 
-        static byte[] KeyPressed(ref byte[] koord, ref byte index, ref byte forgatas)
+        private static byte[] KeyPressed(ref byte[] koord, ref byte index, ref byte forgatas)
         {
             switch (Console.ReadKey(true).Key)
             {
@@ -229,9 +229,9 @@ namespace Terkep
             }
         }
 
-        static bool Ellenorzes()
+        private static bool Ellenorzes()
         {
-            string koord = Methods.Koordinata(0, 0);
+            string koord = M.Koordinata(0, 0);
             List<string> meglatogatott = new List<string>();
             List<string> vizsgalandok = new List<string>() { koord };
 
@@ -247,7 +247,7 @@ namespace Terkep
 
                     meglatogatott.Add(vizsgalando);
 
-                    foreach (string mezo in Szomszedok(Methods.Koordinata(koord)))
+                    foreach (string mezo in Szomszedok(M.Koordinata(koord)))
                     {
                         if (!meglatogatott.Contains(mezo))
                             vizsgalandok.Add(mezo);
@@ -259,7 +259,7 @@ namespace Terkep
             byte[] koordinata;
             foreach (string mezo in meglatogatott)
             {
-                koordinata = Methods.Koordinata(mezo);
+                koordinata = M.Koordinata(mezo);
                 if (matrix[koordinata[0], koordinata[1]] == '█')
                     return true;
             }
@@ -267,7 +267,7 @@ namespace Terkep
             return false;
         }
 
-        static List<string> Szomszedok(byte[] koord)
+        private static List<string> Szomszedok(byte[] koord)
         {
             List<string> szomszedok = new List<string>();
             byte x = koord[0], y = koord[1];
@@ -277,32 +277,32 @@ namespace Terkep
             if(koord[0]+1<matrix.GetLength(0) && "╬═╦╩╠╚╔█".Contains(matrix[x, y]) && "╬═╦╩╣╗╝█".Contains(matrix[x+1, y]))
             {
                 temp = koord;
-                szomszedok.Add(Methods.Koordinata((byte)(temp[0]+1), temp[1]));
+                szomszedok.Add(M.Koordinata((byte)(temp[0]+1), temp[1]));
             }
             //le
             if(koord[1]+1<matrix.GetLength(1) && "╬╦║╣╠╗╔█".Contains(matrix[x, y]) && "╬╩║╣╠╝╚█".Contains(matrix[x, y+1]))
             {
                 temp = koord;
-                szomszedok.Add(Methods.Koordinata(temp[0], (byte)(temp[1]+1)));
+                szomszedok.Add(M.Koordinata(temp[0], (byte)(temp[1]+1)));
             }
             //bal
             if(koord[0]>0 && "╬═╦╩╣╗╝█".Contains(matrix[x, y]) && "╬═╦╩╠╚╔█".Contains(matrix[x-1, y]))
             {
                 temp = koord;
-                szomszedok.Add(Methods.Koordinata((byte)(temp[0]-1), temp[1]));
+                szomszedok.Add(M.Koordinata((byte)(temp[0]-1), temp[1]));
             }
             //fel
             if(koord[1]>0 && "╬╩║╣╠╝╚█".Contains(matrix[x, y]) && "╬╦║╣╠╗╔█".Contains(matrix[x, y-1]))
             {
                 temp = koord;
-                szomszedok.Add(Methods.Koordinata(temp[0], (byte)(temp[1]-1)));
+                szomszedok.Add(M.Koordinata(temp[0], (byte)(temp[1]-1)));
             }
 
 
             return szomszedok;
         }
         
-        static void KiirKoordinata(byte[] koord)
+        private static void KiirKoordinata(byte[] koord)
         {
             Console.SetCursorPosition(bekezdes, matrix.GetLength(1)+2);
             Console.Write("       ");
@@ -310,7 +310,7 @@ namespace Terkep
             Console.WriteLine($"{koord[0]};{koord[1]}");
         }
 
-        static void MentTerkepet(char[,] palya, string palyaNeve)
+        private static void MentTerkepet(char[,] palya, string palyaNeve)
         {
             string[] sorok = new string[palya.GetLength(1)];
 

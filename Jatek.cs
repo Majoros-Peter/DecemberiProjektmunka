@@ -5,9 +5,9 @@ namespace Jatek
 {
     class J
     {
-        static void Main(string[] args)
+        public static void JatekMain()
         {
-            
+
         }
     }
 }
