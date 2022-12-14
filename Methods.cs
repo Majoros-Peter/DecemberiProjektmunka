@@ -138,5 +138,10 @@ namespace Methods
         {
             return Convert.ToString(egyikSzam)+";"+Convert.ToString(masikSzam);
         }
+
+        public static void Valaszt(string[] szoveg, Action[] methods)
+        {
+            
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Terkep;
 using Jatek;
+using Methods;
 
 namespace Program
 {
@@ -8,6 +9,10 @@ namespace Program
     {
         static void Main()
         {
+            string[] szovegek = { "Játék indítása", "Pálya szerkesztése" };
+            Action[] methods = {J.JatekMain, T.TerkepMain };
+
+            M.Valaszt(szovegek, methods);
             while(true)
             {
                 Console.CursorVisible = false;
