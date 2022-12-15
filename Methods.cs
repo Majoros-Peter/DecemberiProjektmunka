@@ -143,5 +143,11 @@ namespace Methods
         {
             
         }
+        
+        
+        public static void Input(string szoveg, Type tipus)
+        {
+            
+        }
     }
 }
