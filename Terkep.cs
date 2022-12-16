@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Methods;
 
 namespace Terkep
@@ -10,6 +11,7 @@ namespace Terkep
         private static char[,] karakterek = { { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔'}, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } };
         private static char[,] matrix;
         private static byte bekezdes;
+        private static string mappa = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - "\\bin\\Debug\\net6.0".Length);
         private static Random rnd = new Random();
 
         public static void TerkepMain()
@@ -33,9 +35,9 @@ namespace Terkep
             }
         }
 
+
         private static void SajatPalya()
         {
-
             Console.Write("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): ");
             byte[] szelMag = M.Koordinata(Console.ReadLine());
             matrix = new char[szelMag[0], szelMag[1]];
@@ -67,9 +69,28 @@ namespace Terkep
 
             if(Ellenorzes())
             {
-                Console.Clear();
-                Console.Write("A pálya mentéséhez adja meg az elérési utat, és a nevét: ");
-                MentTerkepet(matrix, Console.ReadLine());
+                Beker:
+                    Console.Clear();
+                    Console.Write("Adja meg a pálya nevét a mentéshez: ");
+                    string eleresiUt = Console.ReadLine();
+
+                    if(File.Exists(String.Join("",mappa,"\\",eleresiUt,".txt")))
+                    {
+                        Console.Clear();
+                        Console.Write("Ilyen nevű pálya már létezik, biztosan felül akarod írni (I/N)?");
+                        switch (Console.ReadKey(true).Key)
+                        {
+                            case ConsoleKey.I:
+                                Console.Clear();
+                                break;
+                            case ConsoleKey.N:
+                                goto Beker;
+                        }
+                    }
+
+                    MentTerkepet(matrix, eleresiUt);
+                    Console.WriteLine($"Sikeres mentés!");
+                    return;
             }
         }
 
@@ -91,10 +112,36 @@ namespace Terkep
             Console.Clear();
         }
 
-        //W.I.P
         private static void MeglevoModositas()
         {
-            Console.WriteLine("W.I.P");
+            Console.Write("Adja meg a pálya nevét amin változtatni szeretne: ");
+            string eleresiUt = Console.ReadLine();
+            matrix = Betolt(eleresiUt);
+            bekezdes = (byte)((Console.WindowWidth-matrix.GetLength(0))/2);
+            byte[] koord = { 0, 0 };
+
+            Console.Clear();
+            PalyaRajzol();
+            ElemekRajzol();
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(0 + bekezdes, 0);
+
+            byte hanyadik = 0, forgatas = 0;
+            while (!vege)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write(karakterek[hanyadik, forgatas]);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(KeyPressed(ref koord, ref hanyadik, ref forgatas)[0] + bekezdes, koord[1]);
+            }
+
+            if (Ellenorzes())
+            {
+                Console.Clear();
+                MentTerkepet(matrix, eleresiUt);
+                Console.WriteLine($"Sikeres mentés!");
+            }
         }
 
         private static void PalyaRajzol()
@@ -239,7 +286,7 @@ namespace Terkep
             while (vizsgalandok.Count > 0)
             {
                 string vizsgalando = vizsgalandok.Last();
-                vizsgalandok.RemoveAt(vizsgalandok.Count - 1);
+                vizsgalandok.RemoveAt(0);
 
                 if (!meglatogatott.Contains(vizsgalando))
                 {
@@ -314,10 +361,23 @@ namespace Terkep
         {
             string[] sorok = new string[palya.GetLength(1)];
 
-            for (byte oszlop = 0; oszlop < palya.GetLength(0); oszlop++)
-                for (byte sor = 0; sor < sorok.Length; sor++)
-                    sorok[sor] += palya[oszlop, sor];
-            File.WriteAllLines(palyaNeve, sorok);
+            for (byte sor = 0; sor < palya.GetLength(0); sor++)
+                for (byte oszlop = 0; oszlop < sorok.Length; oszlop++)
+                    sorok[oszlop] += palya[sor, oszlop];
+
+            File.WriteAllLines(String.Join("",mappa,"\\",palyaNeve,".txt"), sorok);
+        }
+
+        private static char[,] Betolt(string palyaNeve)
+        {
+            string[] sorok = File.ReadAllLines(String.Join("",mappa,"\\",palyaNeve,".txt"));
+            char[,] palya = new char[sorok.Length, sorok[0].Length];
+
+            for (int sor = 0; sor < palya.GetLength(0); sor++)
+                for (int oszlop = 0; oszlop < palya.GetLength(1); oszlop++)
+                    palya[sor, oszlop] = sorok[oszlop][sor];
+
+            return palya;
         }
     }
 }
