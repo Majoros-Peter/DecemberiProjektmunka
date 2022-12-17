@@ -17,32 +17,27 @@ namespace Terkep
         public static void TerkepMain()
         {
             Console.Clear();
-            Console.WriteLine("[s]aját pálya készítése\n[g]enerálás\n[m]eglévő pályán módosítás");
+            Console.Write("[s]aját pálya készítése\n[g]enerálás\n[m]eglévő pályán módosítás");
             switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.S:
-                    Console.Clear();
                     SajatPalya();
                     break;
                 case ConsoleKey.G:
-                    Console.Clear();
                     GeneralPalya();
                     break;
                 case ConsoleKey.M:
-                    Console.Clear();
                     MeglevoModositas();
                     break;
             }
         }
 
-
         private static void SajatPalya()
         {
-            Console.Write("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): ");
-            byte[] szelMag = M.Koordinata(Console.ReadLine());
+            byte[] szelMag = BekerKoordinata("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): "), koord = { 0, 0 };
             matrix = new char[szelMag[0], szelMag[1]];
             bekezdes = (byte)((Console.WindowWidth-szelMag[0])/2);
-            byte[] koord = { 0, 0 };
+            GC.Collect();   //Meghívja a GarbageCollectort.
 
 
             for (byte sor = 0; sor < matrix.GetLength(0); sor++)
@@ -52,7 +47,6 @@ namespace Terkep
 
             Console.Clear();
             PalyaRajzol();
-            ElemekRajzol();
 
 
             Console.ForegroundColor = ConsoleColor.White;
@@ -70,38 +64,36 @@ namespace Terkep
             if(Ellenorzes())
             {
                 Beker:
+
+                Console.Clear();
+                Console.Write("Adja meg a pálya nevét a mentéshez: ");
+                string eleresiUt = Console.ReadLine();
+
+                if(File.Exists(String.Join("",mappa,"\\",eleresiUt,".txt")))
+                {
                     Console.Clear();
-                    Console.Write("Adja meg a pálya nevét a mentéshez: ");
-                    string eleresiUt = Console.ReadLine();
-
-                    if(File.Exists(String.Join("",mappa,"\\",eleresiUt,".txt")))
+                    Console.Write("Ilyen nevű pálya már létezik, biztosan felül akarod írni (I/N)?");
+                    switch (Console.ReadKey(true).Key)
                     {
-                        Console.Clear();
-                        Console.Write("Ilyen nevű pálya már létezik, biztosan felül akarod írni (I/N)?");
-                        switch (Console.ReadKey(true).Key)
-                        {
-                            case ConsoleKey.I:
-                                Console.Clear();
-                                break;
-                            case ConsoleKey.N:
-                                goto Beker;
-                        }
+                        case ConsoleKey.I:
+                            Console.Clear();
+                            break;
+                        case ConsoleKey.N:
+                            goto Beker;
                     }
+                }
 
-                    MentTerkepet(matrix, eleresiUt);
-                    Console.WriteLine($"Sikeres mentés!");
-                    return;
+                MentTerkepet(matrix, eleresiUt);
+                Console.WriteLine($"Sikeres mentés!");
+                return;
             }
         }
 
         //W.I.P
         private static void GeneralPalya()
         {
-            Console.Write("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): ");
-            byte[] szelMag = M.Koordinata(Console.ReadLine());
+            byte[] szelMag = BekerKoordinata("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): "), koord = BekerKoordinata("Adja meg a pálya kezdőkoordinátáját ;-vel elválasztva (x;y): ");
             matrix = new char[szelMag[0], szelMag[1]];
-            Console.Write("Adja meg a pálya kezdőkoordinátáját ;-vel elválasztva (x;y): ");
-            byte[] koord = M.Koordinata(Console.ReadLine());
 
 
             for (byte sor = 0; sor < matrix.GetLength(0); sor++)
@@ -122,12 +114,11 @@ namespace Terkep
 
             Console.Clear();
             PalyaRajzol();
-            ElemekRajzol();
 
             Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(0 + bekezdes, 0);
+            Console.SetCursorPosition(bekezdes, 0);
 
-            byte hanyadik = 0, forgatas = 0;
+            byte hanyadik = 4, forgatas = 0;
             while (!vege)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -146,6 +137,8 @@ namespace Terkep
 
         private static void PalyaRajzol()
         {
+            byte bekezdes2 = (byte)((Console.WindowWidth-30)/2);
+            
             Console.SetCursorPosition(0, 0);
             for (byte oszlop = 0; oszlop < matrix.GetLength(1); oszlop++)
             {
@@ -155,25 +148,22 @@ namespace Terkep
                     Console.Write(matrix[sor, oszlop]);
                 Console.WriteLine();
             }
-        }
+        
 
-        private static void ElemekRajzol()
-        {
-            byte bekezdes = (byte)((Console.WindowWidth-30)/2);
             for (byte index = 0; index < 5; index++)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1) + 5);
+                Console.SetCursorPosition(7*index+bekezdes2, matrix.GetLength(1) + 5);
                 Console.Write("╔═══╗");
-                Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1) + 6);
+                Console.SetCursorPosition(7*index+bekezdes2, matrix.GetLength(1) + 6);
                 Console.Write("║ ");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("║╗╦╬█"[index]);
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write(" ║");
-                Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1) + 7);
+                Console.SetCursorPosition(7*index+bekezdes2, matrix.GetLength(1) + 7);
                 Console.Write("╚═══╝");
-                Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1) + 8);
+                Console.SetCursorPosition(7*index+bekezdes2, matrix.GetLength(1) + 8);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write($"  {"12345"[index]}");
             }
@@ -261,7 +251,6 @@ namespace Terkep
                 //LERAKÁS
                 case ConsoleKey.Enter:
                     matrix[koord[0], koord[1]] = karakterek[index, forgatas];
-                    PalyaRajzol();
                     return koord;
 
 
@@ -348,14 +337,6 @@ namespace Terkep
 
             return szomszedok;
         }
-        
-        private static void KiirKoordinata(byte[] koord)
-        {
-            Console.SetCursorPosition(bekezdes, matrix.GetLength(1)+2);
-            Console.Write("       ");
-            Console.SetCursorPosition(bekezdes, matrix.GetLength(1)+2);
-            Console.WriteLine($"{koord[0]};{koord[1]}");
-        }
 
         private static void MentTerkepet(char[,] palya, string palyaNeve)
         {
@@ -371,13 +352,30 @@ namespace Terkep
         private static char[,] Betolt(string palyaNeve)
         {
             string[] sorok = File.ReadAllLines(String.Join("",mappa,"\\",palyaNeve,".txt"));
-            char[,] palya = new char[sorok.Length, sorok[0].Length];
+            char[,] palya = new char[sorok[0].Length, sorok.Length];
 
             for (int sor = 0; sor < palya.GetLength(0); sor++)
                 for (int oszlop = 0; oszlop < palya.GetLength(1); oszlop++)
                     palya[sor, oszlop] = sorok[oszlop][sor];
 
             return palya;
+        }
+
+        private static byte[] BekerKoordinata(string szoveg)
+        {
+            Vissza:
+            Console.Clear();
+            Console.Write(szoveg);
+            try
+            {
+                return M.Koordinata(Console.ReadLine());
+
+            }catch
+            {
+                Console.WriteLine("Nem jó formában adta meg!");
+                Console.ReadKey();
+                goto Vissza;
+            }
         }
     }
 }
