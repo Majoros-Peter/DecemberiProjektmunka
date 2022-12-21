@@ -1,5 +1,4 @@
-﻿using System;
-using Terkep;
+﻿using Terkep;
 using Jatek;
 using Methods;
 
@@ -13,10 +12,10 @@ namespace Program
             Action[] methods = {J.JatekMain, T.TerkepMain };
 
             M.Valaszt(szovegek, methods);
+            Console.CursorVisible = false;
+            Console.Write("[j]áték indítása\n[p]álya szerkesztése");
             while(true)
             {
-                Console.CursorVisible = false;
-                Console.Write("[j]áték indítása\n[p]álya szerkesztése");
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.P:

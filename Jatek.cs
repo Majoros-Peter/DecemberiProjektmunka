@@ -1,4 +1,3 @@
-using System;
 using Methods;
 
 namespace Jatek
@@ -7,7 +6,7 @@ namespace Jatek
     {
         public static void JatekMain()
         {
-
+            
         }
     }
 }

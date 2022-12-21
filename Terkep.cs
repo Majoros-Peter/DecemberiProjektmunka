@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Methods;
 
 namespace Terkep
@@ -8,11 +5,10 @@ namespace Terkep
     class T
     {
         private static bool vege = false;
-        private static char[,] karakterek = { { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔'}, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } };
+        private static char[,] karakterek = { { '.', '.', '.', '.' }, { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔'}, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } };
         private static char[,] matrix;
         private static byte bekezdes;
         private static string mappa = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - "\\bin\\Debug\\net6.0".Length);
-        private static Random rnd = new Random();
 
         public static void TerkepMain()
         {
@@ -31,28 +27,27 @@ namespace Terkep
                     break;
             }
         }
-
+            
         private static void SajatPalya()
         {
             byte[] szelMag = BekerKoordinata("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): "), koord = { 0, 0 };
             matrix = new char[szelMag[0], szelMag[1]];
             bekezdes = (byte)((Console.WindowWidth-szelMag[0])/2);
-            GC.Collect();   //Meghívja a GarbageCollectort.
 
-
-            for (byte sor = 0; sor < matrix.GetLength(0); sor++)
-                for (byte oszlop = 0; oszlop < matrix.GetLength(1); oszlop++)
+            for (byte sor = 0; sor < szelMag[0]; sor++)
+                for (byte oszlop = 0; oszlop < szelMag[1]; oszlop++)
                     matrix[sor, oszlop] = '.';
 
 
             Console.Clear();
             PalyaRajzol();
+            Elemek();
 
 
             Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(0+bekezdes, 0);
+            Console.SetCursorPosition(bekezdes, 0);
 
-            byte hanyadik = 0, forgatas = 0;
+            byte hanyadik = 4, forgatas = 0;
             while(!vege)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -63,6 +58,7 @@ namespace Terkep
 
             if(Ellenorzes())
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Beker:
 
                 Console.Clear();
@@ -83,37 +79,86 @@ namespace Terkep
                     }
                 }
 
-                MentTerkepet(matrix, eleresiUt);
+                MentTerkepet(eleresiUt);
                 Console.WriteLine($"Sikeres mentés!");
                 return;
             }
         }
 
-        //W.I.P
         private static void GeneralPalya()
         {
             byte[] szelMag = BekerKoordinata("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): "), koord = BekerKoordinata("Adja meg a pálya kezdőkoordinátáját ;-vel elválasztva (x;y): ");
             matrix = new char[szelMag[0], szelMag[1]];
+            bekezdes = (byte)((Console.WindowWidth-szelMag[0])/2);
 
 
-            for (byte sor = 0; sor < matrix.GetLength(0); sor++)
-                for (byte oszlop = 0; oszlop < matrix.GetLength(1); oszlop++)
+            for (byte sor = 0; sor < szelMag[0]; sor++)
+                for (byte oszlop = 0; oszlop < szelMag[1]; oszlop++)
                     matrix[sor, oszlop] = '.';
+
+            matrix[koord[0], koord[1]] = '╬';
 
 
             Console.Clear();
+            General(M.Koordinata(koord));
+            Elemek();
+
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(bekezdes, 0);
+
+            byte hanyadik = 4, forgatas = 0;
+            while (!vege)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write(karakterek[hanyadik, forgatas]);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(KeyPressed(ref koord, ref hanyadik, ref forgatas)[0] + bekezdes, koord[1]);
+            }
+
+            if (Ellenorzes())
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+            Beker:
+
+                Console.Clear();
+                Console.Write("Adja meg a pálya nevét a mentéshez: ");
+                string eleresiUt = Console.ReadLine();
+
+                if (File.Exists(String.Join("", mappa, "\\", eleresiUt, ".txt")))
+                {
+                    Console.Clear();
+                    Console.Write("Ilyen nevű pálya már létezik, biztosan felül akarod írni (I/N)?");
+                    switch (Console.ReadKey(true).Key)
+                    {
+                        case ConsoleKey.I:
+                            Console.Clear();
+                            break;
+                        case ConsoleKey.N:
+                            goto Beker;
+                    }
+                }
+
+                MentTerkepet(eleresiUt);
+                Console.WriteLine($"Sikeres mentés!");
+                return;
+            }
         }
 
         private static void MeglevoModositas()
         {
+            Console.Clear();
             Console.Write("Adja meg a pálya nevét amin változtatni szeretne: ");
             string eleresiUt = Console.ReadLine();
             matrix = Betolt(eleresiUt);
             bekezdes = (byte)((Console.WindowWidth-matrix.GetLength(0))/2);
             byte[] koord = { 0, 0 };
 
+
             Console.Clear();
             PalyaRajzol();
+            Elemek();
+
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(bekezdes, 0);
@@ -130,42 +175,43 @@ namespace Terkep
             if (Ellenorzes())
             {
                 Console.Clear();
-                MentTerkepet(matrix, eleresiUt);
+                MentTerkepet(eleresiUt);
                 Console.WriteLine($"Sikeres mentés!");
             }
         }
 
         private static void PalyaRajzol()
         {
-            byte bekezdes2 = (byte)((Console.WindowWidth-30)/2);
-            
             Console.SetCursorPosition(0, 0);
             for (byte oszlop = 0; oszlop < matrix.GetLength(1); oszlop++)
             {
-                for(byte i = 0; i < bekezdes; i++)
+                for (byte i = 0; i < bekezdes; i++)
                     Console.Write(" ");
                 for (byte sor = 0; sor < matrix.GetLength(0); sor++)
                     Console.Write(matrix[sor, oszlop]);
                 Console.WriteLine();
             }
-        
+        }
 
-            for (byte index = 0; index < 5; index++)
+        private static void Elemek()
+        {
+            byte bekezdes = (byte)((Console.WindowWidth - 40) / 2);
+            for (byte index = 0; index < 6; index++)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.SetCursorPosition(7*index+bekezdes2, matrix.GetLength(1) + 5);
+                Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1) + 5);
                 Console.Write("╔═══╗");
-                Console.SetCursorPosition(7*index+bekezdes2, matrix.GetLength(1) + 6);
+                Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1) + 6);
                 Console.Write("║ ");
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("║╗╦╬█"[index]);
+                Console.Write(".║╗╦╬█"[index]);
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write(" ║");
-                Console.SetCursorPosition(7*index+bekezdes2, matrix.GetLength(1) + 7);
+                Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1) + 7);
                 Console.Write("╚═══╝");
-                Console.SetCursorPosition(7*index+bekezdes2, matrix.GetLength(1) + 8);
+                Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1) + 8);
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write($"  {"12345"[index]}");
+                Console.Write($"  {"012345"[index]}");
             }
         }
 
@@ -209,30 +255,35 @@ namespace Terkep
 
 
                 //ELEM KIVÁLASZTÁS
+                case ConsoleKey.NumPad0:
+                case ConsoleKey.D0:
+                    forgatas = 0;
+                    index = 0;
+                    return koord;
                 case ConsoleKey.NumPad1:
                 case ConsoleKey.D1:
                     forgatas=0;
-                    index=0;
+                    index=1;
                     return koord;
                 case ConsoleKey.NumPad2:
                 case ConsoleKey.D2:
                     forgatas=0;
-                    index=1;
+                    index=2;
                     return koord;
                 case ConsoleKey.NumPad3:
                 case ConsoleKey.D3:
                     forgatas=0;
-                    index=2;
+                    index=3;
                     return koord;
                 case ConsoleKey.NumPad4:
                 case ConsoleKey.D4:
                     forgatas=0;
-                    index=3;
+                    index=4;
                     return koord;
                 case ConsoleKey.NumPad5:
                 case ConsoleKey.D5:
                     forgatas = 0;
-                    index=4;
+                    index=5;
                     return koord;
 
 
@@ -265,12 +316,88 @@ namespace Terkep
             }
         }
 
+        private static void General(string koord)
+        {
+            List<string> meglatogatott = new(), vizsgalandok = new() { koord };
+            
+            for (byte oszlop = 0; oszlop < matrix.GetLength(1); oszlop++)
+            {
+                for (byte i = 0; i < bekezdes; i++)
+                    Console.Write(" ");
+                for (byte sor = 0; sor < matrix.GetLength(0); sor++)
+                    Console.Write(matrix[sor, oszlop]);
+                Console.WriteLine();
+            }
+
+            while(vizsgalandok.Count > 0)
+            {
+                string vizsgalando = vizsgalandok.Last();
+                vizsgalandok.RemoveAt(vizsgalandok.Count-1);
+
+                if(!meglatogatott.Contains(vizsgalando))
+                {
+                    koord = vizsgalando;
+
+                    meglatogatott.Add(vizsgalando);
+
+                    foreach (string mezo in MelleRak(M.Koordinata(koord)))
+                    {
+                        if (!meglatogatott.Contains(mezo))
+                            vizsgalandok.Add(mezo);
+                    }
+                }
+            }
+        }
+
+        public static List<string> MelleRak(byte[] koord)
+        {
+            List<string> szomszedok = new();
+            byte x = koord[0], y = koord[1];
+            Random rnd = new();
+
+
+            //jobb
+            if (x+1 < matrix.GetLength(0) && "╬═╦╩╠╚╔█".Contains(matrix[x, y]) && matrix[x+1, y] == '.' && rnd.Next(matrix.GetLength(0)*2) > 0)
+            {
+                szomszedok.Add(M.Koordinata((byte)(x+1), y));
+                BeirMatrixba("╬══════════╦╩╣╦╩╣╗╝╗╝╗╝"[rnd.Next(23)], (byte)(x+1), y);
+                Thread.Sleep(100);
+            }
+
+            //le
+            if (y+1 < matrix.GetLength(1) && "╬╦║╣╠╗╔█".Contains(matrix[x, y]) && matrix[x, y+1] == '.' && rnd.Next(matrix.GetLength(1)*2) > 0)
+            {
+                szomszedok.Add(M.Koordinata(x, (byte)(y+1)));
+                BeirMatrixba("╬║║║║║║║║║║╩╣╠╩╣╠╝╚╝╚╝╚"[rnd.Next(23)], x, (byte)(y+1));
+                Thread.Sleep(100);
+            }
+            
+            //bal
+            if (x > 0 && "╬═╦╩╣╗╝█".Contains(matrix[x, y]) && matrix[x-1, y] == '.' && rnd.Next(matrix.GetLength(0)*2) > 0)
+            {
+                szomszedok.Add(M.Koordinata((byte)(x-1), y));
+                BeirMatrixba("╬══════════╦╩╠╦╩╠╚╔╚╔╚╔"[rnd.Next(23)], (byte)(x-1), y);
+                Thread.Sleep(100);
+            }
+            
+            //fel
+            if (y > 0 && "╬╩║╣╠╝╚█".Contains(matrix[x, y]) && matrix[x, y-1] == '.' && rnd.Next(matrix.GetLength(1)*2) > 0)
+            {
+                szomszedok.Add(M.Koordinata(x, (byte)(y-1)));
+                BeirMatrixba("╬║║║║║║║║║║╠╦╣╠╦╣╔╗╔╗╔╗"[rnd.Next(23)], x, (byte)(y-1));
+                Thread.Sleep(100);
+            }
+
+
+            return szomszedok;
+        }
+
         private static bool Ellenorzes()
         {
             string koord = M.Koordinata(0, 0);
-            List<string> meglatogatott = new List<string>();
-            List<string> vizsgalandok = new List<string>() { koord };
+            List<string> meglatogatott = new(), vizsgalandok = new() { koord };
 
+            Console.ForegroundColor = ConsoleColor.Green;
 
             while (vizsgalandok.Count > 0)
             {
@@ -280,6 +407,11 @@ namespace Terkep
                 if (!meglatogatott.Contains(vizsgalando))
                 {
                     koord = vizsgalando;
+
+                    byte[] seged = M.Koordinata(koord);
+                    Console.SetCursorPosition(bekezdes + seged[0], seged[1]);
+                    Console.Write(matrix[seged[0], seged[1]]);
+                    Thread.Sleep(100);
 
                     meglatogatott.Add(vizsgalando);
 
@@ -305,46 +437,33 @@ namespace Terkep
 
         private static List<string> Szomszedok(byte[] koord)
         {
-            List<string> szomszedok = new List<string>();
+            List<string> szomszedok = new();
             byte x = koord[0], y = koord[1];
-            byte[] temp;
 
             //jobb
-            if(koord[0]+1<matrix.GetLength(0) && "╬═╦╩╠╚╔█".Contains(matrix[x, y]) && "╬═╦╩╣╗╝█".Contains(matrix[x+1, y]))
-            {
-                temp = koord;
-                szomszedok.Add(M.Koordinata((byte)(temp[0]+1), temp[1]));
-            }
+            if(x+1<matrix.GetLength(0) && "╬═╦╩╠╚╔█".Contains(matrix[x, y]) && "╬═╦╩╣╗╝█".Contains(matrix[x+1, y]))
+                szomszedok.Add(M.Koordinata((byte)(x+1), y));
             //le
-            if(koord[1]+1<matrix.GetLength(1) && "╬╦║╣╠╗╔█".Contains(matrix[x, y]) && "╬╩║╣╠╝╚█".Contains(matrix[x, y+1]))
-            {
-                temp = koord;
-                szomszedok.Add(M.Koordinata(temp[0], (byte)(temp[1]+1)));
-            }
+            if(y+1<matrix.GetLength(1) && "╬╦║╣╠╗╔█".Contains(matrix[x, y]) && "╬╩║╣╠╝╚█".Contains(matrix[x, y+1]))
+                szomszedok.Add(M.Koordinata(x, (byte)(y+1)));
             //bal
-            if(koord[0]>0 && "╬═╦╩╣╗╝█".Contains(matrix[x, y]) && "╬═╦╩╠╚╔█".Contains(matrix[x-1, y]))
-            {
-                temp = koord;
-                szomszedok.Add(M.Koordinata((byte)(temp[0]-1), temp[1]));
-            }
+            if(x>0 && "╬═╦╩╣╗╝█".Contains(matrix[x, y]) && "╬═╦╩╠╚╔█".Contains(matrix[x-1, y]))
+                szomszedok.Add(M.Koordinata((byte)(x-1), y));
             //fel
-            if(koord[1]>0 && "╬╩║╣╠╝╚█".Contains(matrix[x, y]) && "╬╦║╣╠╗╔█".Contains(matrix[x, y-1]))
-            {
-                temp = koord;
-                szomszedok.Add(M.Koordinata(temp[0], (byte)(temp[1]-1)));
-            }
+            if(y>0 && "╬╩║╣╠╝╚█".Contains(matrix[x, y]) && "╬╦║╣╠╗╔█".Contains(matrix[x, y-1]))
+                szomszedok.Add(M.Koordinata(x, (byte)(y-1)));
 
 
             return szomszedok;
         }
 
-        private static void MentTerkepet(char[,] palya, string palyaNeve)
+        private static void MentTerkepet(string palyaNeve)
         {
-            string[] sorok = new string[palya.GetLength(1)];
+            string[] sorok = new string[matrix.GetLength(1)];
 
-            for (byte sor = 0; sor < palya.GetLength(0); sor++)
+            for (byte sor = 0; sor < matrix.GetLength(0); sor++)
                 for (byte oszlop = 0; oszlop < sorok.Length; oszlop++)
-                    sorok[oszlop] += palya[sor, oszlop];
+                    sorok[oszlop] += matrix[sor, oszlop];
 
             File.WriteAllLines(String.Join("",mappa,"\\",palyaNeve,".txt"), sorok);
         }
@@ -376,6 +495,13 @@ namespace Terkep
                 Console.ReadKey();
                 goto Vissza;
             }
+        }
+
+        private static void BeirMatrixba(char karakter, byte x, byte y)
+        {
+            Console.SetCursorPosition(bekezdes + x, y);
+            matrix[x, y] = karakter;
+            Console.Write(matrix[x, y]);
         }
     }
 }

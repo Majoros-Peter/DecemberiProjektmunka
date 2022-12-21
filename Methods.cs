@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Methods
 {
     class M
@@ -18,7 +14,7 @@ namespace Methods
             {
                 for (int oszlopIndex = 0; oszlopIndex < map.GetLength(1); oszlopIndex++)
                 {
-                    if (map[sorIndex,oszlopIndex] == '█')
+                    if (map[sorIndex, oszlopIndex] == '█')
                     {
                         termekSzama++;
                     }
@@ -33,7 +29,7 @@ namespace Methods
         /// <returns>Az alkalmas kijáratok száma</returns>
         public static int GetSuitableEntrance(char[,] map)
         {
-         
+
             int kijaratokSzama = 0;
             for (int sorIndex = 0; sorIndex < map.GetLength(0); sorIndex++)
             {
@@ -59,12 +55,12 @@ namespace Methods
         public static bool IsInvalidElement(char[,] map)
         {
             bool karakterEllenorzo = true;
-            char[] karakterekTombje = { '╬','═','╦','╩','║','╣','╠','╗','╝','╚', '╔', '█','.'};
+            char[] karakterekTombje = { '╬', '═', '╦', '╩', '║', '╣', '╠', '╗', '╝', '╚', '╔', '█', '.' };
             for (int sorIndex = 0; sorIndex < map.GetLength(0); sorIndex++)
             {
                 for (int oszlopIndex = 0; oszlopIndex < map.GetLength(1); oszlopIndex++)
                 {
-                    if (karakterekTombje.Contains(map[sorIndex,oszlopIndex]))
+                    if (karakterekTombje.Contains(map[sorIndex, oszlopIndex]))
                     {
                         karakterEllenorzo = true;
                     }
@@ -111,7 +107,7 @@ namespace Methods
             List<string> unavailables = new List<string>();
             // ?
             // pld: string poz = "4:12"; 
-            
+
 
             return unavailables;
         }
@@ -122,7 +118,7 @@ namespace Methods
         /// <returns>A létrehozott labirintus térképe</returns>
         public static char[,] GenerateLabyrinth(List<string> positionsList)
         {
-            
+
             return null;
         }
         public static byte[] Koordinata(string bekeres)
@@ -139,15 +135,20 @@ namespace Methods
             return Convert.ToString(egyikSzam)+";"+Convert.ToString(masikSzam);
         }
 
+        public static string Koordinata(byte[] tomb)
+        {
+            return Convert.ToString(tomb[0])+";"+Convert.ToString(tomb[1]);
+        }
+
         public static void Valaszt(string[] szoveg, Action[] methods)
         {
-            
+
         }
-        
-        
+
+
         public static void Input(string szoveg, Type tipus)
         {
-            
+
         }
     }
 }
