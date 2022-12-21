@@ -4,10 +4,9 @@ namespace Terkep
 {
     class T
     {
-        private static bool vege = false;
-        private static char[,] karakterek = { { '.', '.', '.', '.' }, { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔'}, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } };
-        private static char[,] matrix;
         private static byte bekezdes;
+        private static bool vege = false;
+        private static char[,] karakterek = { { '.', '.', '.', '.' }, { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔' }, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } }, matrix;
         private static string mappa = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - "\\bin\\Debug\\net6.0".Length);
 
         public static void TerkepMain()
@@ -105,7 +104,7 @@ namespace Terkep
 
 
             Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(bekezdes, 0);
+            Console.SetCursorPosition(bekezdes+koord[0], koord[1]);
 
             byte hanyadik = 4, forgatas = 0;
             while (!vege)
@@ -116,7 +115,7 @@ namespace Terkep
                 Console.SetCursorPosition(KeyPressed(ref koord, ref hanyadik, ref forgatas)[0] + bekezdes, koord[1]);
             }
 
-            if (Ellenorzes())
+            if (Ellenorzes(M.Koordinata(koord[0], koord[1])))
             {
                 Console.ForegroundColor = ConsoleColor.White;
             Beker:
@@ -392,9 +391,9 @@ namespace Terkep
             return szomszedok;
         }
 
-        private static bool Ellenorzes()
+        private static bool Ellenorzes(string koord="")
         {
-            string koord = M.Koordinata(BekerKoordinata("Adja meg a labirintus kezdőkoordinátáját ;-vel elválasztva: ")); //Azért kell mind a 2 koordinátás függvény, mert csak az egyikben van hibaellenőrzés.
+            if (koord=="") koord = M.Koordinata(BekerKoordinata("Adja meg a labirintus kezdőkoordinátáját ;-vel elválasztva: ")); //Azért kell mind a 2 koordinátás függvény, mert csak az egyikben van hibaellenőrzés.
             List<string> meglatogatott = new(), vizsgalandok = new() { koord };
 
             Console.Clear();
@@ -416,6 +415,8 @@ namespace Terkep
                     Console.SetCursorPosition(bekezdes + seged[0], seged[1]);
                     Console.Write(matrix[seged[0], seged[1]]);
                     Thread.Sleep(100);
+                    if (matrix[seged[0], seged[1]] == '█')
+                        return true;
 
                     meglatogatott.Add(vizsgalando);
 
@@ -425,15 +426,6 @@ namespace Terkep
                             vizsgalandok.Add(mezo);
                     }
                 }
-            }
-
-
-            byte[] koordinata;
-            foreach (string mezo in meglatogatott)
-            {
-                koordinata = M.Koordinata(mezo);
-                if (matrix[koordinata[0], koordinata[1]] == '█')
-                    return true;
             }
 
             return false;
