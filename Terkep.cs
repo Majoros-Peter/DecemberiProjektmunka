@@ -394,15 +394,19 @@ namespace Terkep
 
         private static bool Ellenorzes()
         {
-            string koord = M.Koordinata(0, 0);
+            string koord = M.Koordinata(BekerKoordinata("Adja meg a labirintus kezdőkoordinátáját ;-vel elválasztva: ")); //Azért kell mind a 2 koordinátás függvény, mert csak az egyikben van hibaellenőrzés.
             List<string> meglatogatott = new(), vizsgalandok = new() { koord };
+
+            Console.Clear();
+            PalyaRajzol();
+            Elemek();
 
             Console.ForegroundColor = ConsoleColor.Green;
 
             while (vizsgalandok.Count > 0)
             {
                 string vizsgalando = vizsgalandok.Last();
-                vizsgalandok.RemoveAt(0);
+                vizsgalandok.RemoveAt(vizsgalandok.Count-1);
 
                 if (!meglatogatott.Contains(vizsgalando))
                 {
