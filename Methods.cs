@@ -1,4 +1,4 @@
-namespace Methods
+namespace Labirintus
 {
     class M
     {

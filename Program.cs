@@ -1,11 +1,9 @@
-﻿using Terkep;
-using Jatek;
-using Methods;
-
-namespace Program
+﻿namespace Labirintus
 {
     class P
     {
+        public static ConsoleKey[] terkepGombok = { };
+
         static void Main()
         {
             string[] szovegek = { "Játék indítása", "Pálya szerkesztése" };

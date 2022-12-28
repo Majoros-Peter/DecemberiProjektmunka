@@ -1,6 +1,4 @@
-using Methods;
-
-namespace Jatek
+namespace Labirintus
 {
     class J
     {
