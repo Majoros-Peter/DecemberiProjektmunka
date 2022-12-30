@@ -11,18 +11,18 @@
 
             M.Valaszt(szovegek, methods);
             Console.CursorVisible = false;
-            Console.Write("[j]áték indítása\n[p]álya szerkesztése");
-            while(true)
+            Console.Write("[j]áték indítása\n[p]álya szerkesztése\n[b]eállítások");
+            switch (Console.ReadKey(true).Key)
             {
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.P:
-                        T.TerkepMain();
-                        return;
-                    case ConsoleKey.J:
-                        J.JatekMain();
-                        return;
-                }
+                case ConsoleKey.P:
+                    T.TerkepMain();
+                    return;
+                case ConsoleKey.J:
+                    J.JatekMain();
+                    return;
+                case ConsoleKey.B:
+                    B.BeallitasokMain();
+                    return;
             }
         }
     }
