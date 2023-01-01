@@ -1,0 +1,63 @@
+{
+  "Cim": [
+    "Labirintus",
+    "Labirintus Játék",
+    "Labirintus Készítő",
+    "Beállítások",
+    "Nyelv Beállítások",
+    "Szín Beállítások"
+  ],
+  "Kilepes": "Kilépés",
+  "Vissza": "Vissza",
+  "Inditas": "Játék indítása",
+  "Szerkesztes": "Pálya szerkesztése",
+  "Beallitas": "Beállítások",
+  "Sajat": "Saját labirintus készítése",
+  "General": "Labirintus generálása",
+  "Modositas": "Meglévő labirintuson módosítás",
+  "BekerMeret": "Adja meg a pálya méretét ;-vel elválasztva (szélesség;magasság): ",
+  "BekerKoord": "Adja meg a pálya kezdő koordinátáját ;-vel elválasztva (x;y): ",
+  "BekerPalyaNev": [
+    "Adja meg a pálya nevét a mentéshez: ",
+    "Adja meg a pálya nevét amin változtatni szeretne: "
+  ],
+  "LetezoPalya": "Ilyen nevű pálya már létezik, biztosan felül akarod írni (I/N)?",
+  "SikeresMentes": "Sikeres Mentés!",
+  "Hiba": "Nem jó formában adta meg!",
+  "NyelvBeallitas": "Nyelv",
+  "SzinBeallitas": "Szín",
+  "Alapertelmezett": "Visszaállítás",
+  "SzinezhetoDolgok": [
+    "Labirintus keretének színe",
+    "Labirintus színe",
+    "Üres hely színe",
+    "Kiválasztott elem színe",
+    "Elemek színe",
+    "Elemek keretének színe",
+    "Bejart labirintus színe",
+    "Elemek sorszámának színe",
+    "Szöveg színe"
+  ],
+  "SikeresBeallit": [
+    "Színek sikeresen visszaállítva!",
+    "Nyelv sikeresen átállítva magyarra!"
+  ],
+  "Szinek": [
+    "fekete",
+    "sötétkék",
+    "sötétzöld",
+    "sötétcián",
+    "sötétpiros",
+    "sötétmagenta",
+    "sötétsárga",
+    "szürke",
+    "sötétszürke",
+    "kék",
+    "zöld",
+    "cián",
+    "piros",
+    "magenta",
+    "sárga",
+    "fehér"
+  ]
+}

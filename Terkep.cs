@@ -5,29 +5,14 @@ namespace Labirintus
         private static bool vege = false;
         private static byte oldalBekezdes, felsoBekezdes = 3;
         private static char[,] karakterek = { { '.', '.', '.', '.' }, { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔' }, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } }, matrix;
+        private static Nyelv szoveg = Adatok.szoveg;
 
-        public static void TerkepMain()
-        {
-            Console.Clear();
-            Console.Write("[s]aját pálya készítése\n[g]enerálás\n[m]eglévő pályán módosítás");
-            switch (Console.ReadKey(true).Key)
-            {
-                case ConsoleKey.S:
-                    SajatPalya();
-                    break;
-                case ConsoleKey.G:
-                    GeneralPalya();
-                    break;
-                case ConsoleKey.M:
-                    MeglevoModositas();
-                    break;
-            }
-        }
+        public static void TerkepMain() => M.Valaszt(new string[] { szoveg.Sajat, szoveg.General, szoveg.Modositas, szoveg.Vissza }, new Action[] { SajatPalya, GeneralPalya, MeglevoModositas,  P.Valaszt}, szoveg.Cim[2]);
             
         private static void SajatPalya()
         {
             Console.ForegroundColor = Adatok.szovegSzine;
-            byte[] szelMag = BekerKoordinata("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): "), koord = { 0, 0 };
+            byte[] szelMag = BekerKoordinata(szoveg.BekerMeret), koord = { 0, 0 };
             matrix = new char[szelMag[0], szelMag[1]];
             oldalBekezdes = (byte)((Console.WindowWidth-szelMag[0])/2);
 
@@ -48,7 +33,7 @@ namespace Labirintus
             {
                 Console.ForegroundColor = Adatok.kivalasztottSzine;
                 Console.Write(karakterek[hanyadik, forgatas]);
-                Console.SetCursorPosition(KeyPressed(ref koord, ref hanyadik, ref forgatas)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
+                Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
             }
 
             if(Ellenorzes())
@@ -57,13 +42,13 @@ namespace Labirintus
                 Beker:
 
                 Console.Clear();
-                Console.Write("Adja meg a pálya nevét a mentéshez: ");
+                Console.Write(szoveg.BekerPalyaNev[0]);
                 string eleresiUt = Console.ReadLine();
 
-                if(File.Exists(Adatok.mappa+"\\"+eleresiUt+".txt"))
+                if(File.Exists($"{Adatok.mappa}/{eleresiUt}.txt"))
                 {
                     Console.Clear();
-                    Console.Write("Ilyen nevű pálya már létezik, biztosan felül akarod írni (I/N)?");
+                    Console.Write(szoveg.LetezoPalya);
                     switch (Console.ReadKey(true).Key)
                     {
                         case ConsoleKey.I:
@@ -81,7 +66,7 @@ namespace Labirintus
 
         private static void GeneralPalya()
         {
-            byte[] szelMag = BekerKoordinata("Adja meg a pálya hosszát ;-vel elválasztva (szélesség;magasság): "), koord = BekerKoordinata("Adja meg a pálya kezdőkoordinátáját ;-vel elválasztva (x;y): ");
+            byte[] szelMag = BekerKoordinata(szoveg.BekerMeret), koord = BekerKoordinata(szoveg.BekerKoord);
             string kezdoKoord = M.Koordinata(koord);
             matrix = new char[szelMag[0], szelMag[1]];
             oldalBekezdes = (byte)((Console.WindowWidth-szelMag[0])/2);
@@ -106,7 +91,7 @@ namespace Labirintus
             {
                 Console.ForegroundColor = Adatok.kivalasztottSzine;
                 Console.Write(karakterek[hanyadik, forgatas]);
-                Console.SetCursorPosition(KeyPressed(ref koord, ref hanyadik, ref forgatas)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
+                Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
             }
 
             if (Ellenorzes(kezdoKoord))
@@ -115,13 +100,13 @@ namespace Labirintus
 
                 Beker:
                 Console.Clear();
-                Console.Write("Adja meg a pálya nevét a mentéshez: ");
+                Console.Write(szoveg.BekerPalyaNev[0]);
                 string eleresiUt = Console.ReadLine();
 
-                if (File.Exists(Adatok.mappa+"\\"+eleresiUt+".txt"))
+                if (File.Exists($"{Adatok.mappa}/{eleresiUt}.txt"))
                 {
                     Console.Clear();
-                    Console.Write("Ilyen nevű pálya már létezik, biztosan felül akarod írni (I/N)?");
+                    Console.Write(szoveg.LetezoPalya);
                     switch (Console.ReadKey(true).Key)
                     {
                         case ConsoleKey.I:
@@ -140,7 +125,7 @@ namespace Labirintus
         private static void MeglevoModositas()
         {
             Console.Clear();
-            Console.Write("Adja meg a pálya nevét amin változtatni szeretne: ");
+            Console.Write(szoveg.BekerPalyaNev[1]);
             string eleresiUt = Console.ReadLine();
             matrix = Betolt(eleresiUt);
             oldalBekezdes = (byte)((Console.WindowWidth-matrix.GetLength(0))/2);
@@ -159,7 +144,7 @@ namespace Labirintus
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write(karakterek[hanyadik, forgatas]);
-                Console.SetCursorPosition(KeyPressed(ref koord, ref hanyadik, ref forgatas)[0] + oldalBekezdes, koord[1]+felsoBekezdes);
+                Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas)[0] + oldalBekezdes, koord[1]+felsoBekezdes);
             }
 
             if (Ellenorzes())
@@ -226,7 +211,7 @@ namespace Labirintus
             }
         }
 
-        private static byte[] KeyPressed(ref byte[] koord, ref byte index, ref byte forgatas)
+        private static byte[] GombNyomas(ref byte[] koord, ref byte index, ref byte forgatas)
         {
             switch (Console.ReadKey(true).Key)
             {
@@ -358,7 +343,7 @@ namespace Labirintus
 
 
             //jobb
-            if (x+1 < matrix.GetLength(0) && "╬═╦╩╠╚╔█".Contains(matrix[x, y]) && matrix[x+1, y] == '.' && rnd.Next(matrix.GetLength(0)*2) > 0)
+            if (x+1 < matrix.GetLength(0) && "╬═╦╩╠╚╔█".Contains(matrix[x, y]) && matrix[x+1, y] == '.' && rnd.Next(matrix.GetLength(0)) > 0)
             {
                 szomszedok.Add(M.Koordinata((byte)(x+1), y));
                 BeirMatrixba("╬════════╦╩╣╦╩╣╗╝╗╝"[rnd.Next(19)], (byte)(x+1), y);
@@ -366,7 +351,7 @@ namespace Labirintus
             }
 
             //le
-            if (y+1 < matrix.GetLength(1) && "╬╦║╣╠╗╔█".Contains(matrix[x, y]) && matrix[x, y+1] == '.' && rnd.Next(matrix.GetLength(1)*2) > 0)
+            if (y+1 < matrix.GetLength(1) && "╬╦║╣╠╗╔█".Contains(matrix[x, y]) && matrix[x, y+1] == '.' && rnd.Next(matrix.GetLength(1)) > 0)
             {
                 szomszedok.Add(M.Koordinata(x, (byte)(y+1)));
                 BeirMatrixba("╬║║║║║║║║╩╣╠╩╣╠╝╚╝╚"[rnd.Next(19)], x, (byte)(y+1));
@@ -374,7 +359,7 @@ namespace Labirintus
             }
             
             //bal
-            if (x > 0 && "╬═╦╩╣╗╝█".Contains(matrix[x, y]) && matrix[x-1, y] == '.' && rnd.Next(matrix.GetLength(0)*2) > 0)
+            if (x > 0 && "╬═╦╩╣╗╝█".Contains(matrix[x, y]) && matrix[x-1, y] == '.' && rnd.Next(matrix.GetLength(0)) > 0)
             {
                 szomszedok.Add(M.Koordinata((byte)(x-1), y));
                 BeirMatrixba("╬════════╦╩╠╦╩╠╚╔╚╔"[rnd.Next(19)], (byte)(x-1), y);
@@ -382,7 +367,7 @@ namespace Labirintus
             }
             
             //fel
-            if (y > 0 && "╬╩║╣╠╝╚█".Contains(matrix[x, y]) && matrix[x, y-1] == '.' && rnd.Next(matrix.GetLength(1)*2) > 0)
+            if (y > 0 && "╬╩║╣╠╝╚█".Contains(matrix[x, y]) && matrix[x, y-1] == '.' && rnd.Next(matrix.GetLength(1)) > 0)
             {
                 szomszedok.Add(M.Koordinata(x, (byte)(y-1)));
                 BeirMatrixba("╬║║║║║║║║╠╦╣╠╦╣╔╗╔╗"[rnd.Next(19)], x, (byte)(y-1));
@@ -397,12 +382,11 @@ namespace Labirintus
         {
             Console.ForegroundColor = Adatok.szovegSzine;
             if(koord == "")
-                koord = M.Koordinata(BekerKoordinata("Adja meg a labirintus kezdőkoordinátáját ;-vel elválasztva: ", false)); //Azért kell mind a 2 koordinátás függvény, mert csak az egyikben van hibaellenőrzés.
+                koord = M.Koordinata(BekerKoordinata(szoveg.BekerKoord, false)); //Azért kell mind a 2 koordinátás függvény, mert csak az egyikben van hibaellenőrzés.
             List<string> meglatogatott = new(), vizsgalandok = new() { koord };
 
             Console.Clear();
             PalyaRajzol();
-            Elemek();
 
             Console.ForegroundColor = Adatok.bejartLabirintusSzine;
 
@@ -465,13 +449,13 @@ namespace Labirintus
                 for (byte oszlop = 0; oszlop < sorok.Length; oszlop++)
                     sorok[oszlop] += matrix[sor, oszlop];
 
-            File.WriteAllLines(Adatok.mappa+"\\"+palyaNeve+".txt", sorok);
-            Console.WriteLine("Sikeres mentés!");
+            File.WriteAllLines($"{Adatok.mappa}/{palyaNeve}.txt", sorok);
+            Console.WriteLine(szoveg.SikeresMentes);
         }
 
         private static char[,] Betolt(string palyaNeve)
         {
-            string[] sorok = File.ReadAllLines(Adatok.mappa+"\\"+palyaNeve+".txt");
+            string[] sorok = File.ReadAllLines($"{Adatok.mappa}/{palyaNeve}.txt");
             char[,] palya = new char[sorok[0].Length, sorok.Length];
 
             for (int sor = 0; sor < palya.GetLength(0); sor++)
@@ -481,16 +465,13 @@ namespace Labirintus
             return palya;
         }
 
-        private static byte[] BekerKoordinata(string szoveg, bool torol=true)
+        private static byte[] BekerKoordinata(string szoveg1, bool torol=true)
         {
             Console.SetCursorPosition(0, 0);
             Vissza:
-            if(torol)
-            {
-                Console.Clear();
-                torol = true;
-            }
-            Console.Write(szoveg);
+            if(torol) Torol();
+            torol = true;
+            Console.Write(szoveg1);
             
             try
             {
@@ -498,7 +479,7 @@ namespace Labirintus
             }
             catch
             {
-                Console.WriteLine("Nem jó formában adta meg!");
+                Console.WriteLine(szoveg.Hiba);
                 Console.ReadKey();
                 goto Vissza;
             }
@@ -518,6 +499,19 @@ namespace Labirintus
             else
                 Console.ForegroundColor = Adatok.labirintusSzine;
             Console.Write(matrix[x, y]);
+        }
+
+        private static void Torol()
+        {
+            Console.SetCursorPosition(0, 0);
+            for (byte i = 0; i < Console.WindowWidth; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(0, 1);
+            for (byte i = 0; i < Console.WindowWidth; i++)
+                Console.Write(" ");
+            Console.SetCursorPosition(0, 2);
+            Console.Write("                              ");
+            Console.SetCursorPosition(0, 0);
         }
     }
 }

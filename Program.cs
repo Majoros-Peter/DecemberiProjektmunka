@@ -2,28 +2,16 @@
 {
     class P
     {
-        public static ConsoleKey[] terkepGombok = { };
-
         static void Main()
         {
-            string[] szovegek = { "Játék indítása", "Pálya szerkesztése" };
-            Action[] methods = {J.JatekMain, T.TerkepMain };
-
-            M.Valaszt(szovegek, methods);
             Console.CursorVisible = false;
-            Console.Write("[j]áték indítása\n[p]álya szerkesztése\n[b]eállítások");
-            switch (Console.ReadKey(true).Key)
-            {
-                case ConsoleKey.P:
-                    T.TerkepMain();
-                    return;
-                case ConsoleKey.J:
-                    J.JatekMain();
-                    return;
-                case ConsoleKey.B:
-                    B.BeallitasokMain();
-                    return;
-            }
+            Valaszt();
+        }
+        public static void Valaszt() => M.Valaszt(new string[] { Adatok.szoveg.Inditas, Adatok.szoveg.Szerkesztes, Adatok.szoveg.Beallitas, Adatok.szoveg.Kilepes }, new Action[] { J.JatekMain, T.TerkepMain, B.BeallitasokMain, Kilep }, Adatok.szoveg.Cim[0]);
+        
+        private static void Kilep()
+        {
+            return;
         }
     }
 }

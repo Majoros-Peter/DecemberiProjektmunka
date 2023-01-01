@@ -140,15 +140,72 @@ namespace Labirintus
             return Convert.ToString(tomb[0])+";"+Convert.ToString(tomb[1]);
         }
 
-        public static void Valaszt(string[] szoveg, Action[] methods)
+        public static void Valaszt(string[] szoveg, Action[] methods, string cim="")
         {
+            byte hanyadik = 0;
 
-        }
+            Console.Clear();
+            if(cim!="")
+            {
+                Console.SetCursorPosition((Console.WindowWidth-cim.Length)/2, 0);
+                Console.WriteLine(cim+"\n");
+            }
+            for (byte i = 0; i < szoveg.Length; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.SetCursorPosition((Console.WindowWidth-szoveg[i].Length)/2-2, i+2);
+                if (i == hanyadik)
+                {
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.White;
+                }
+                Console.WriteLine($">>{szoveg[i]}<<");
+            }
 
-
-        public static void Input(string szoveg, Type tipus)
-        {
-
+            while (true)
+            {
+            Beker:
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        if (hanyadik == 0)
+                            goto Beker;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, hanyadik+2);
+                        Console.Write($">>{szoveg[hanyadik]}<<");
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        hanyadik--;
+                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, hanyadik+2);
+                        Console.Write($">>{szoveg[hanyadik]}<<");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if (hanyadik == szoveg.Length - 1)
+                            goto Beker;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, hanyadik+2);
+                        Console.Write($">>{szoveg[hanyadik]}<<");
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        hanyadik++;
+                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, hanyadik+2);
+                        Console.Write($">>{szoveg[hanyadik]}<<");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        break;
+                    case ConsoleKey.Enter:
+                        Console.Clear();
+                        methods[hanyadik]();
+                        return;
+                    default:
+                        goto Beker;
+                }
+            }
         }
     }
 }

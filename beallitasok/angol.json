@@ -1,0 +1,50 @@
+{
+  "Cim": [
+    "Labirynth",
+    "(Labirynth) Game",
+    "(Labirynth) Editor",
+    "Options"
+  ],
+  "Kilepes": "Exit",
+  "Vissza": "Back",
+  "Inditas": "Start game",
+  "Szerkesztes": "Map editor",
+  "Beallitas": "Options",
+  "Sajat": "Make own labirynth",
+  "General": "Generate labirynth",
+  "Modositas": "Edit an existing labirynth",
+  "BekerMeret": "Type in the size of the labirynth separated by ; (width;height): ",
+  "BekerKoord": "Type in the starting coordinate separated by ; (x;y): ",
+  "BekerPalyaNev": [
+    "Type in the name of the labirynth to save it: ",
+    "Type in the name of the labirynth, that you want to edit: "
+  ],
+  "LetezoPalya": "There's already a labirynth with this name, do you really want to change it (I/N)?: ",
+  "SikeresMentes": "Successfully saved!",
+  "Hiba": "You gave it in wrong form!",
+  "NyelvBeallitas": "Language",
+  "SzinBeallitas": "Color",
+  "Alapertelmezett": "Reset",
+  "SikeresBeallit": [
+    "Color successfully reseted!",
+    "Language got successfully set to English!"
+  ],
+  "Szinek": [
+    "black",
+    "darkblue",
+    "darkgreen",
+    "darkcyan",
+    "darkred",
+    "darkmagenta",
+    "darkyellow",
+    "gray",
+    "darkgray",
+    "blue",
+    "green",
+    "cyan",
+    "red",
+    "magenta",
+    "yellow",
+    "white"
+  ]
+}
