@@ -6,6 +6,18 @@ namespace Labirintus
     {
         private static byte hanyadik;
         private static Nyelv szoveg = Adatok.szoveg;
+        private const string SZINEKJSON = @"{
+  ""LabirintusKeretSzine"": 6,
+  ""LabirintusSzine"": 15,
+  ""UresHelySzine"": 0,
+  ""KivalasztottSzine"": 11,
+  ""ElemSzine"": 12,
+  ""ElemKereteSzine"": 6,
+  ""ElemSorszamSzine"": 10,
+  ""BejartLabirintusSzine"": 10,
+  ""SzovegSzine"": 15
+}";
+        private const string GOMBOKJSON = @"";
         public static void BeallitasokMain() => M.Valaszt(new string[] { szoveg.NyelvBeallitas, szoveg.SzinBeallitas, szoveg.Vissza }, new Action[] { Nyelv, Szin, P.Valaszt }, szoveg.Cim[3]);
 
         private static void Nyelv() => M.Valaszt(new string[] { szoveg.Alapertelmezett, szoveg.Vissza }, new Action[] { Nyelv, BeallitasokMain }, szoveg.Cim[4]);
@@ -79,14 +91,39 @@ namespace Labirintus
         {
             Adatok.labirintusKeretSzine = (ConsoleColor)6;
             Adatok.labirintusSzine = (ConsoleColor)15;
-            Adatok.uresHelySzine = (ConsoleColor)0;
+            Adatok.uresHelySzine = 0;
             Adatok.kivalasztottSzine = (ConsoleColor)11;
             Adatok.elemSzine = (ConsoleColor)12;
             Adatok.elemKereteSzine = (ConsoleColor)6;
             Adatok.elemSorszamSzine = (ConsoleColor)10;
             Adatok.bejartLabirintusSzine = (ConsoleColor)10;
             Adatok.szovegSzine = (ConsoleColor)15;
-            File.WriteAllText(Adatok.mappa+@"\beallitasok\szinek.json", File.ReadAllText(Adatok.mappa+@"\beallitasok\AlapertelmezettSzinek.json"));
+            File.WriteAllText(Adatok.mappa+@"\beallitasok\szinek.json", SZINEKJSON);
+            Console.WriteLine(szoveg.SikeresBeallit[0]);
+            Szin();
+        }
+
+        private static void AlapertelmezettGimbok()
+        {
+            Adatok.gombok.Fel = 38;
+            Adatok.gombok.Le = 40;
+            Adatok.gombok.Bal = 37;
+            Adatok.gombok.Jobb = 39;
+            Adatok.gombok.ElemA0 = 48;
+            Adatok.gombok.ElemB0 = 96;
+            Adatok.gombok.ElemA1 = 49;
+            Adatok.gombok.ElemB1 = 97;
+            Adatok.gombok.ElemA2 = 50;
+            Adatok.gombok.ElemB2 = 98;
+            Adatok.gombok.ElemA3 = 51;
+            Adatok.gombok.ElemB3 = 99;
+            Adatok.gombok.ElemA4 = 52;
+            Adatok.gombok.ElemB4 = 100;
+            Adatok.gombok.ElemA5 = 53;
+            Adatok.gombok.ElemB5 = 101;
+            Adatok.gombok.Lerak = 13;
+            Adatok.gombok.Kilep = 27;
+            File.WriteAllText(Adatok.mappa+@"\beallitasok\gombok.json", GOMBOKJSON);
             Console.WriteLine(szoveg.SikeresBeallit[0]);
             Szin();
         }
@@ -96,8 +133,9 @@ namespace Labirintus
     {
         public static byte nyelv = 0;    //0 => magyar, 1 => angol
         public static string mappa = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 17);
-        public static Nyelv szoveg = JsonSerializer.Deserialize<Nyelv>(nyelv==0 ? File.ReadAllText(mappa+@"\beallitasok\magyar.json") : File.ReadAllText(mappa + @"\beallitasok\angol.json"));
+        public static Nyelv szoveg = JsonSerializer.Deserialize<Nyelv>(nyelv==0 ? File.ReadAllText(mappa+@"\beallitasok\magyar.json") : File.ReadAllText(mappa+@"\beallitasok\angol.json"));
         public static SzinIndex szinek = JsonSerializer.Deserialize<SzinIndex>(File.ReadAllText(mappa+@"\beallitasok\szinek.json"));
+        public static Gombok gombok = JsonSerializer.Deserialize<Gombok>(File.ReadAllText(mappa+@"\beallitasok\gombok.json"));
         public static ConsoleColor
             labirintusKeretSzine = (ConsoleColor)szinek.LabirintusKeretSzine,
             labirintusSzine = (ConsoleColor)szinek.LabirintusSzine,
@@ -146,5 +184,29 @@ namespace Labirintus
         public byte ElemSorszamSzine { get; set; }
         public byte BejartLabirintusSzine { get; set; }
         public byte SzovegSzine { get; set; }
+    }
+
+    class Gombok
+    {
+        public byte Fel { get; set; }
+        public byte Le { get; set; }
+        public byte Bal { get; set; }
+        public byte Jobb { get; set; }
+        public byte ElemA0 { get; set; }
+        public byte ElemB0 { get; set; }
+        public byte ElemA1 { get; set; }
+        public byte ElemB1 { get; set; }
+        public byte ElemA2 { get; set; }
+        public byte ElemB2 { get; set; }
+        public byte ElemA3 { get; set; }
+        public byte ElemB3 { get; set; }
+        public byte ElemA4 { get; set; }
+        public byte ElemB4 { get; set; }
+        public byte ElemA5 { get; set; }
+        public byte ElemB5 { get; set; }
+        public byte Forgat1 { get; set; }
+        public byte Forgat2 { get; set; }
+        public byte Lerak { get; set; }
+        public byte Kilep { get; set; }
     }
 }

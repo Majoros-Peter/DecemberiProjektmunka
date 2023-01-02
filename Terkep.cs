@@ -6,6 +6,7 @@ namespace Labirintus
         private static byte oldalBekezdes, felsoBekezdes = 3;
         private static char[,] karakterek = { { '.', '.', '.', '.' }, { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔' }, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } }, matrix;
         private static Nyelv szoveg = Adatok.szoveg;
+        private static Gombok gombok = Adatok.gombok;
 
         public static void TerkepMain() => M.Valaszt(new string[] { szoveg.Sajat, szoveg.General, szoveg.Modositas, szoveg.Vissza }, new Action[] { SajatPalya, GeneralPalya, MeglevoModositas,  P.Valaszt}, szoveg.Cim[2]);
             
@@ -33,7 +34,7 @@ namespace Labirintus
             {
                 Console.ForegroundColor = Adatok.kivalasztottSzine;
                 Console.Write(karakterek[hanyadik, forgatas]);
-                Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
+                Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas, (byte)Console.ReadKey(true).Key)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
             }
 
             if(Ellenorzes())
@@ -91,7 +92,7 @@ namespace Labirintus
             {
                 Console.ForegroundColor = Adatok.kivalasztottSzine;
                 Console.Write(karakterek[hanyadik, forgatas]);
-                Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
+                Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas, (byte)Console.ReadKey(true).Key)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
             }
 
             if (Ellenorzes(kezdoKoord))
@@ -144,7 +145,7 @@ namespace Labirintus
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write(karakterek[hanyadik, forgatas]);
-                Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas)[0] + oldalBekezdes, koord[1]+felsoBekezdes);
+                Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas, (byte)Console.ReadKey(true).Key)[0] + oldalBekezdes, koord[1]+felsoBekezdes);
             }
 
             if (Ellenorzes())
@@ -207,105 +208,112 @@ namespace Labirintus
                 Console.Write("╚═══╝");
                 Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1)+8);
                 Console.ForegroundColor = Adatok.elemSorszamSzine;
-                Console.Write($"  {"012345"[index]}");
+                Console.Write($"  {index}");
             }
         }
 
-        private static byte[] GombNyomas(ref byte[] koord, ref byte index, ref byte forgatas)
+        private static byte[] GombNyomas(ref byte[] koord, ref byte index, ref byte forgatas, byte input)
         {
-            switch (Console.ReadKey(true).Key)
+            //MOZGATÁS
+            //FEL
+            if (gombok.Fel == input)
             {
-                //MOZATGÁS
-                case ConsoleKey.UpArrow:
-                    Console.SetCursorPosition(koord[0]+oldalBekezdes, koord[1]+felsoBekezdes);
-                    BeirElem(koord[0], koord[1]);
-                    if (koord[1]==0)
-                        return koord;
-                    koord[1]--;
+                Console.SetCursorPosition(koord[0] + oldalBekezdes, koord[1] + felsoBekezdes);
+                BeirElem(koord[0], koord[1]);
+                if (koord[1] == 0)
                     return koord;
-                case ConsoleKey.DownArrow:
-                    Console.SetCursorPosition(koord[0]+oldalBekezdes, koord[1]+felsoBekezdes);
-                    BeirElem(koord[0], koord[1]);
-                    if (koord[1]==matrix.GetLength(1)-1)
-                        return koord;
-                    koord[1]++;
-                    return koord;
-                case ConsoleKey.LeftArrow:
-                    Console.SetCursorPosition(koord[0]+oldalBekezdes, koord[1]+felsoBekezdes);
-                    BeirElem(koord[0], koord[1]);
-                    if (koord[0]==0)
-                        return koord;
-                    koord[0]--;
-                    return koord;
-                case ConsoleKey.RightArrow:
-                    Console.SetCursorPosition(koord[0]+oldalBekezdes, koord[1]+felsoBekezdes);
-                    BeirElem(koord[0], koord[1]);
-                    if (koord[0]==matrix.GetLength(0)-1)
-                        return koord;
-                    koord[0]++;
-                    return koord;
-
-
-                //ELEM KIVÁLASZTÁS
-                case ConsoleKey.NumPad0:
-                case ConsoleKey.D0:
-                    forgatas = 0;
-                    index = 0;
-                    return koord;
-                case ConsoleKey.NumPad1:
-                case ConsoleKey.D1:
-                    forgatas=0;
-                    index=1;
-                    return koord;
-                case ConsoleKey.NumPad2:
-                case ConsoleKey.D2:
-                    forgatas=0;
-                    index=2;
-                    return koord;
-                case ConsoleKey.NumPad3:
-                case ConsoleKey.D3:
-                    forgatas=0;
-                    index=3;
-                    return koord;
-                case ConsoleKey.NumPad4:
-                case ConsoleKey.D4:
-                    forgatas=0;
-                    index=4;
-                    return koord;
-                case ConsoleKey.NumPad5:
-                case ConsoleKey.D5:
-                    forgatas = 0;
-                    index=5;
-                    return koord;
-
-
-                //FORGATÁS
-                case ConsoleKey.Subtract:
-                    if(forgatas==0)
-                        forgatas=4;
-                    forgatas--;
-                    return koord;
-                case ConsoleKey.Add:
-                    forgatas++;
-                    forgatas%=4;
-                    return koord;
-
-
-                //LERAKÁS
-                case ConsoleKey.Enter:
-                    matrix[koord[0], koord[1]] = karakterek[index, forgatas];
-                    return koord;
-
-
-                //KILÉPÉS
-                case ConsoleKey.Escape:
-                    vege=true;
-                    return koord;
-
-
-                default:
-                    return koord;
+                koord[1]--;
             }
+            //LE
+            else if (gombok.Le == input)
+            {
+                Console.SetCursorPosition(koord[0] + oldalBekezdes, koord[1] + felsoBekezdes);
+                BeirElem(koord[0], koord[1]);
+                if (koord[1] == matrix.GetLength(1) - 1)
+                    return koord;
+                koord[1]++;
+            }
+            //BAL     
+            else if (gombok.Bal == input)
+            {
+                Console.SetCursorPosition(koord[0] + oldalBekezdes, koord[1] + felsoBekezdes);
+                BeirElem(koord[0], koord[1]);
+                if (koord[0] == 0)
+                    return koord;
+                koord[0]--;
+            }
+            //JOBB
+            else if (gombok.Jobb == input)
+            {
+                Console.SetCursorPosition(koord[0] + oldalBekezdes, koord[1] + felsoBekezdes);
+                BeirElem(koord[0], koord[1]);
+                if (koord[0] == matrix.GetLength(0) - 1)
+                    return koord;
+                koord[0]++;
+            }
+            //ELEM KIVÁLASZTÁS
+            //0
+            else if (gombok.ElemA0 == input || gombok.ElemB0 == input)
+            {
+                forgatas = 0;
+                index = 0;
+            }
+            //1
+            else if (gombok.ElemA1 == input || gombok.ElemB1 == input)
+            {
+                forgatas = 0;
+                index = 1;
+            }
+            //2
+            else if (gombok.ElemA2 == input || gombok.ElemB2 == input)
+            {
+                forgatas = 0;
+                index = 2;
+            }
+            //3
+            else if (gombok.ElemA3 == input || gombok.ElemB3 == input)
+            {
+                forgatas = 0;
+                index = 3;
+            }
+            //4
+            else if (gombok.ElemA4 == input || gombok.ElemB4 == input)
+            {
+                forgatas = 0;
+                index = 4;
+            }
+            //5
+            else if (gombok.ElemA5 == input || gombok.ElemB5 == input)
+            {
+                forgatas = 0;
+                index = 5;
+            }
+            //FORGATÁS
+            //-
+            else if (gombok.Forgat1 == input)
+            {
+                if (forgatas == 0)
+                    forgatas = 4;
+                forgatas--;
+            }
+            //+
+            else if (gombok.Forgat2 == input)
+            {
+                forgatas++;
+                forgatas %= 4;
+            }
+            //LERAKÁS
+            //ENTER
+            else if(gombok.Lerak == input)
+            {
+                matrix[koord[0], koord[1]] = karakterek[index, forgatas];
+            }
+            //KILÉPÉS
+            else if (gombok.Kilep == input)
+                vege = true;
+            else
+                return koord;
+            return koord;
         }
 
         private static void General(string koord)
@@ -453,7 +461,7 @@ namespace Labirintus
             Console.WriteLine(szoveg.SikeresMentes);
         }
 
-        private static char[,] Betolt(string palyaNeve)
+        public static char[,] Betolt(string palyaNeve)
         {
             string[] sorok = File.ReadAllLines($"{Adatok.mappa}/{palyaNeve}.txt");
             char[,] palya = new char[sorok[0].Length, sorok.Length];
