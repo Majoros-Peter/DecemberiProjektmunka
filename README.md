@@ -5,4 +5,4 @@
 >>- Stiegermayer Bálint ***Methods.cs***
 >># ⠀
 >>### Extrák:
->>- **Szín** és **nyelv** beállítások
+>>- **Szín**, **nyelv**, és **gomb** beállítások
