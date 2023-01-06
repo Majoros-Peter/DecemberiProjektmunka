@@ -146,6 +146,9 @@ namespace Labirintus
                     break;
             }
             hanyadik=0;
+
+            File.WriteAllText(Adatok.mappa+@"\beallitasok\szinek.json", JsonSerializer.Serialize(Adatok.szinek, new JsonSerializerOptions { WriteIndented = true }));
+
             Szin();
         }
 
@@ -190,7 +193,7 @@ namespace Labirintus
             GombokBeallit(index);
             Console.Clear();
             Console.WriteLine(szoveg.GombBeker[0] + szoveg.Gombok[index] + szoveg.GombBeker[4] + T.GombSzoveg(gomb) + szoveg.GombBeker[2]);
-
+            File.WriteAllText(Adatok.mappa+@"\beallitasok\gombok.json", JsonSerializer.Serialize(Adatok.gombok, new JsonSerializerOptions { WriteIndented = true }));
             Gombok();
         }
 
@@ -247,7 +250,7 @@ namespace Labirintus
         {
             File.WriteAllText(Adatok.mappa+@"\beallitasok\gombok.json", GOMBOKJSON);
             Adatok.gombok = JsonSerializer.Deserialize<Gombok>(File.ReadAllText(Adatok.mappa+@"\beallitasok\gombok.json"));
-            Console.WriteLine(szoveg.SikeresBeallit[0]);
+            Console.WriteLine(szoveg.SikeresBeallit[2]);
             Console.ReadKey();
             Szin();
         }

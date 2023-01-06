@@ -165,12 +165,11 @@ namespace Labirintus
 
             while (true)
             {
-            Beker:
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.UpArrow:
                         if (hanyadik == 0)
-                            goto Beker;
+                            break;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
@@ -184,8 +183,8 @@ namespace Labirintus
                         Console.BackgroundColor = ConsoleColor.Black;
                         break;
                     case ConsoleKey.DownArrow:
-                        if (hanyadik == szoveg.Length - 1)
-                            goto Beker;
+                        if (hanyadik == szoveg.Length-1)
+                            break;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
@@ -207,7 +206,7 @@ namespace Labirintus
                         methods[methods.Length-1]();
                         return;
                     default:
-                        goto Beker;
+                        break;
                 }
             }
         }
