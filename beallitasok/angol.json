@@ -1,33 +1,48 @@
 {
   "Cim": [
-    "Labirynth",
-    "(Labirynth) Game",
-    "(Labirynth) Editor",
-    "Options"
+    "Labyrinth",
+    "Labyrinth Game",
+    "Labyrinth Editor",
+    "Options",
+    "Language Settings",
+    "Color Settings",
+    "Control Settings"
   ],
   "Kilepes": "Exit",
   "Vissza": "Back",
   "Inditas": "Start game",
   "Szerkesztes": "Map editor",
   "Beallitas": "Options",
-  "Sajat": "Make own labirynth",
-  "General": "Generate labirynth",
-  "Modositas": "Edit an existing labirynth",
-  "BekerMeret": "Type in the size of the labirynth separated by ; (width;height): ",
+  "Sajat": "Make own labyrinth",
+  "General": "Generate labyrinth",
+  "Modositas": "Edit an existing labyrinth",
+  "BekerMeret": "Type in the size of the labyrinth separated by ; (width;height): ",
   "BekerKoord": "Type in the starting coordinate separated by ; (x;y): ",
   "BekerPalyaNev": [
-    "Type in the name of the labirynth to save it: ",
-    "Type in the name of the labirynth, that you want to edit: "
+    "Type in the name of the labyrinth to save it: ",
+    "Type in the name of the labyrinth, that you want to edit: "
   ],
-  "LetezoPalya": "There's already a labirynth with this name, do you really want to change it (I/N)?: ",
+  "LetezoPalya": "There's already a labyrinth with this name, do you really want to change it (I/N)?: ",
   "SikeresMentes": "Successfully saved!",
   "Hiba": "You gave it in wrong form!",
   "NyelvBeallitas": "Language",
+  "NyelvAtallitas": "Set language to hungarian",
   "SzinBeallitas": "Color",
   "Alapertelmezett": "Reset",
+  "SzinezhetoDolgok": [
+    "Color of the edge of labyrinth",
+    "Color of the labyrinth",
+    "Color of the blank space",
+    "Color of the chosen piece",
+    "Color of the pieces",
+    "Color of the edge of pieces",
+    "Color of the visited pieces",
+    "Color of the number of pieces",
+    "Color of the text"
+  ],
   "SikeresBeallit": [
     "Color successfully reseted!",
-    "Language got successfully set to English!"
+    "Language got successfully set to Hungarian! Restart is needed!"
   ],
   "Szinek": [
     "black",
@@ -46,5 +61,27 @@
     "magenta",
     "yellow",
     "white"
+  ],
+  "GombBeallitas": "Button",
+  "Gombok": [
+    "Up",
+    "Down",
+    "Left",
+    "Right",
+    "Piece0",
+    "Piece1",
+    "Piece2",
+    "Piece3",
+    "Piece4",
+    "Piece5",
+    "Rotate1",
+    "Rotate2",
+    "Place",
+    "Exit"
+  ],
+  "GombBeker": [
+    "To the '",
+    "' the '",
+    "' button is assigned."
   ]
 }

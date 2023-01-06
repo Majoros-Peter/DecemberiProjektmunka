@@ -6,13 +6,14 @@ namespace Labirintus
         private static byte oldalBekezdes, felsoBekezdes = 3;
         private static char[,] karakterek = { { '.', '.', '.', '.' }, { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔' }, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } }, matrix;
         private static Nyelv szoveg = Adatok.szoveg;
+        private static SzinIndex szin = Adatok.szinek;
         private static Gombok gombok = Adatok.gombok;
 
         public static void TerkepMain() => M.Valaszt(new string[] { szoveg.Sajat, szoveg.General, szoveg.Modositas, szoveg.Vissza }, new Action[] { SajatPalya, GeneralPalya, MeglevoModositas,  P.Valaszt}, szoveg.Cim[2]);
             
         private static void SajatPalya()
         {
-            Console.ForegroundColor = Adatok.szovegSzine;
+            Console.ForegroundColor = (ConsoleColor)szin.SzovegSzine;
             byte[] szelMag = BekerKoordinata(szoveg.BekerMeret), koord = { 0, 0 };
             matrix = new char[szelMag[0], szelMag[1]];
             oldalBekezdes = (byte)((Console.WindowWidth-szelMag[0])/2);
@@ -32,14 +33,14 @@ namespace Labirintus
             byte hanyadik = 4, forgatas = 0;
             while(!vege)
             {
-                Console.ForegroundColor = Adatok.kivalasztottSzine;
+                Console.ForegroundColor = (ConsoleColor)szin.KivalasztottSzine;
                 Console.Write(karakterek[hanyadik, forgatas]);
                 Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas, (byte)Console.ReadKey(true).Key)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
             }
 
             if(Ellenorzes())
             {
-                Console.ForegroundColor = Adatok.szovegSzine;
+                Console.ForegroundColor = (ConsoleColor)szin.SzovegSzine;
                 Beker:
 
                 Console.Clear();
@@ -67,7 +68,7 @@ namespace Labirintus
 
         private static void GeneralPalya()
         {
-            byte[] szelMag = BekerKoordinata(szoveg.BekerMeret), koord = BekerKoordinata(szoveg.BekerKoord);
+            byte[] szelMag = BekerKoordinata(szoveg.BekerMeret), koord = BekerKoordinata($"{szoveg.BekerKoord[0]} (max: {szelMag[0]-1};{szelMag[1]-1}, {szoveg.BekerKoord[1]}: {(szelMag[0]-1)/2};{(szelMag[1]-1)/2}): ");
             string kezdoKoord = M.Koordinata(koord);
             matrix = new char[szelMag[0], szelMag[1]];
             oldalBekezdes = (byte)((Console.WindowWidth-szelMag[0])/2);
@@ -87,17 +88,17 @@ namespace Labirintus
 
             Console.SetCursorPosition(koord[0]+oldalBekezdes, koord[1]+felsoBekezdes);
 
-            byte hanyadik = 4, forgatas = 0;
+            byte hanyadik = 5, forgatas = 0;
             while (!vege)
             {
-                Console.ForegroundColor = Adatok.kivalasztottSzine;
+                Console.ForegroundColor = (ConsoleColor)szin.KivalasztottSzine;
                 Console.Write(karakterek[hanyadik, forgatas]);
                 Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas, (byte)Console.ReadKey(true).Key)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
             }
 
             if (Ellenorzes(kezdoKoord))
             {
-                Console.ForegroundColor = Adatok.szovegSzine;
+                Console.ForegroundColor = (ConsoleColor)szin.SzovegSzine;
 
                 Beker:
                 Console.Clear();
@@ -143,7 +144,7 @@ namespace Labirintus
             byte hanyadik = 4, forgatas = 0;
             while (!vege)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = (ConsoleColor)szin.KivalasztottSzine;
                 Console.Write(karakterek[hanyadik, forgatas]);
                 Console.SetCursorPosition(GombNyomas(ref koord, ref hanyadik, ref forgatas, (byte)Console.ReadKey(true).Key)[0] + oldalBekezdes, koord[1]+felsoBekezdes);
             }
@@ -157,7 +158,7 @@ namespace Labirintus
 
         private static void PalyaRajzol()
         {
-            Console.ForegroundColor = Adatok.labirintusKeretSzine;
+            Console.ForegroundColor = (ConsoleColor)szin.LabirintusKeretSzine;
             for (byte i = 0; i < matrix.GetLength(0); i++)
             {
                 Console.SetCursorPosition(i+oldalBekezdes, felsoBekezdes-1);
@@ -193,22 +194,24 @@ namespace Labirintus
         private static void Elemek()
         {
             byte bekezdes = (byte)((Console.WindowWidth - 40) / 2);
+            byte[] elemGombok = { gombok.Elem0, gombok.Elem1, gombok.Elem2, gombok.Elem3, gombok.Elem4, gombok.Elem5 };
+
             for (byte index = 0; index < 6; index++)
             {
-                Console.ForegroundColor = Adatok.elemKereteSzine;
+                Console.ForegroundColor = (ConsoleColor)szin.ElemKereteSzine;
                 Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1)+5);
                 Console.Write("╔═══╗");
                 Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1)+6);
                 Console.Write("║ ");
-                Console.ForegroundColor = Adatok.elemSzine;
+                Console.ForegroundColor = (ConsoleColor)szin.ElemSzine;
                 Console.Write(".║╗╦╬█"[index]);
-                Console.ForegroundColor = Adatok.elemKereteSzine;
+                Console.ForegroundColor = (ConsoleColor)szin.ElemKereteSzine;
                 Console.Write(" ║");
                 Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1)+7);
                 Console.Write("╚═══╝");
+                Console.ForegroundColor = (ConsoleColor)szin.ElemSorszamSzine;
                 Console.SetCursorPosition(7*index+bekezdes, matrix.GetLength(1)+8);
-                Console.ForegroundColor = Adatok.elemSorszamSzine;
-                Console.Write($"  {index}");
+                Console.Write($"  {GombSzoveg(elemGombok[index])}");
             }
         }
 
@@ -253,37 +256,37 @@ namespace Labirintus
             }
             //ELEM KIVÁLASZTÁS
             //0
-            else if (gombok.ElemA0 == input || gombok.ElemB0 == input)
+            else if (gombok.Elem0 == input)
             {
                 forgatas = 0;
                 index = 0;
             }
             //1
-            else if (gombok.ElemA1 == input || gombok.ElemB1 == input)
+            else if (gombok.Elem1 == input)
             {
                 forgatas = 0;
                 index = 1;
             }
             //2
-            else if (gombok.ElemA2 == input || gombok.ElemB2 == input)
+            else if (gombok.Elem2 == input)
             {
                 forgatas = 0;
                 index = 2;
             }
             //3
-            else if (gombok.ElemA3 == input || gombok.ElemB3 == input)
+            else if (gombok.Elem3 == input)
             {
                 forgatas = 0;
                 index = 3;
             }
             //4
-            else if (gombok.ElemA4 == input || gombok.ElemB4 == input)
+            else if (gombok.Elem4 == input)
             {
                 forgatas = 0;
                 index = 4;
             }
             //5
-            else if (gombok.ElemA5 == input || gombok.ElemB5 == input)
+            else if (gombok.Elem5 == input)
             {
                 forgatas = 0;
                 index = 5;
@@ -322,7 +325,7 @@ namespace Labirintus
 
             PalyaRajzol();
 
-            Console.ForegroundColor = Adatok.labirintusSzine;
+            Console.ForegroundColor = (ConsoleColor)szin.LabirintusSzine;
             while(vizsgalandok.Count > 0)
             {
                 string vizsgalando = vizsgalandok[0];
@@ -343,7 +346,7 @@ namespace Labirintus
             }
         }
 
-        public static List<string> MelleRak(byte[] koord)
+        private static List<string> MelleRak(byte[] koord)
         {
             List<string> szomszedok = new();
             byte x = koord[0], y = koord[1];
@@ -388,15 +391,15 @@ namespace Labirintus
 
         private static bool Ellenorzes(string koord="")
         {
-            Console.ForegroundColor = Adatok.szovegSzine;
+            Console.ForegroundColor = (ConsoleColor)szin.SzovegSzine;
             if(koord == "")
-                koord = M.Koordinata(BekerKoordinata(szoveg.BekerKoord, false)); //Azért kell mind a 2 koordinátás függvény, mert csak az egyikben van hibaellenőrzés.
+                koord = M.Koordinata(BekerKoordinata($"{szoveg.BekerKoord[0]} (max: {matrix.GetLength(0)-1};{matrix.GetLength(1)-1}): ", false)); //Azért kell mind a 2 koordinátás függvény, mert csak az egyikben van hibaellenőrzés.
             List<string> meglatogatott = new(), vizsgalandok = new() { koord };
 
             Console.Clear();
             PalyaRajzol();
 
-            Console.ForegroundColor = Adatok.bejartLabirintusSzine;
+            Console.ForegroundColor = (ConsoleColor)szin.BejartLabirintusSzine;
 
             while (vizsgalandok.Count > 0)
             {
@@ -461,7 +464,7 @@ namespace Labirintus
             Console.WriteLine(szoveg.SikeresMentes);
         }
 
-        public static char[,] Betolt(string palyaNeve)
+        private static char[,] Betolt(string palyaNeve)
         {
             string[] sorok = File.ReadAllLines($"{Adatok.mappa}/{palyaNeve}.txt");
             char[,] palya = new char[sorok[0].Length, sorok.Length];
@@ -503,9 +506,9 @@ namespace Labirintus
         private static void BeirElem(byte x, byte y)
         {
             if (matrix[x, y] == '.')
-                Console.ForegroundColor = Adatok.uresHelySzine;
+                Console.ForegroundColor = (ConsoleColor)szin.UresHelySzine;
             else
-                Console.ForegroundColor = Adatok.labirintusSzine;
+                Console.ForegroundColor = (ConsoleColor)szin.LabirintusSzine;
             Console.Write(matrix[x, y]);
         }
 
@@ -520,6 +523,13 @@ namespace Labirintus
             Console.SetCursorPosition(0, 2);
             Console.Write("                              ");
             Console.SetCursorPosition(0, 0);
+        }
+
+        public static string GombSzoveg(byte index)
+        {
+            if(47 < index && index < 58)
+                return (index-48).ToString();
+            return ((ConsoleKey)index).ToString();
         }
     }
 }

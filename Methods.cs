@@ -142,19 +142,19 @@ namespace Labirintus
 
         public static void Valaszt(string[] szoveg, Action[] methods, string cim="")
         {
-            byte hanyadik = 0;
+            byte hanyadik = 0, felsoBekezdes = (byte)((Console.WindowHeight-(10+szoveg.Length))/2);
 
             Console.Clear();
             if(cim!="")
             {
-                Console.SetCursorPosition((Console.WindowWidth-cim.Length)/2, 0);
+                Console.SetCursorPosition((Console.WindowWidth-cim.Length)/2, felsoBekezdes);
                 Console.WriteLine(cim+"\n");
             }
             for (byte i = 0; i < szoveg.Length; i++)
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.SetCursorPosition((Console.WindowWidth-szoveg[i].Length)/2-2, i+2);
+                Console.SetCursorPosition((Console.WindowWidth-szoveg[i].Length)/2-2, felsoBekezdes+i+2);
                 if (i == hanyadik)
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
@@ -173,12 +173,12 @@ namespace Labirintus
                             goto Beker;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.BackgroundColor = ConsoleColor.Black;
-                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, hanyadik+2);
+                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.White;
                         hanyadik--;
-                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, hanyadik+2);
+                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.BackgroundColor = ConsoleColor.Black;
@@ -188,12 +188,12 @@ namespace Labirintus
                             goto Beker;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.BackgroundColor = ConsoleColor.Black;
-                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, hanyadik+2);
+                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.White;
                         hanyadik++;
-                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, hanyadik+2);
+                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.BackgroundColor = ConsoleColor.Black;
@@ -201,6 +201,10 @@ namespace Labirintus
                     case ConsoleKey.Enter:
                         Console.Clear();
                         methods[hanyadik]();
+                        return;
+                    case ConsoleKey.Escape:
+                        Console.Clear();
+                        methods[methods.Length-1]();
                         return;
                     default:
                         goto Beker;
