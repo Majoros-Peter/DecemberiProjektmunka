@@ -17,7 +17,10 @@
   "General": "Generate labyrinth",
   "Modositas": "Edit an existing labyrinth",
   "BekerMeret": "Type in the size of the labyrinth separated by ; (width;height): ",
-  "BekerKoord": "Type in the starting coordinate separated by ; (x;y): ",
+  "BekerKoord": [
+    "Type in the starting coordinate of the labyrinth separated by ;",
+    "recommended"
+  ],
   "BekerPalyaNev": [
     "Type in the name of the labyrinth to save it: ",
     "Type in the name of the labyrinth, that you want to edit: "
@@ -83,6 +86,8 @@
   "GombBeker": [
     "To the '",
     "' the '",
-    "' button is assigned."
+    "' button is assigned.",
+    "Press a button!",
+    "', now the '"
   ]
 }

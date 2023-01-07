@@ -143,7 +143,9 @@ namespace Labirintus
         public static void Valaszt(string[] szoveg, Action[] methods, string cim="")
         {
             byte hanyadik = 0, felsoBekezdes = (byte)((Console.WindowHeight-(10+szoveg.Length))/2);
+            byte szelesseg = (byte)Console.WindowWidth, magassag = (byte)Console.WindowHeight;
 
+            Rajzol:
             Console.Clear();
             if(cim!="")
             {
@@ -203,10 +205,20 @@ namespace Labirintus
                         return;
                     case ConsoleKey.Escape:
                         Console.Clear();
-                        methods[methods.Length-1]();
+                        methods[^1]();
                         return;
                     default:
                         break;
+                }
+                if(Console.WindowWidth != szelesseg)
+                {
+                    szelesseg = (byte)Console.WindowWidth;
+                    goto Rajzol;
+                }
+                if (Console.WindowHeight != magassag)
+                {
+                    magassag = (byte)Console.WindowHeight;
+                    goto Rajzol;
                 }
             }
         }

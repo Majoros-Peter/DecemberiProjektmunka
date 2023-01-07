@@ -35,18 +35,12 @@ namespace Labirintus
   ""Le"": 40,
   ""Bal"": 37,
   ""Jobb"": 39,
-  ""ElemA0"": 48,
-  ""ElemB0"": 96,
-  ""ElemA1"": 49,
-  ""ElemB1"": 97,
-  ""ElemA2"": 50,
-  ""ElemB2"": 98,
-  ""ElemA3"": 51,
-  ""ElemB3"": 99,
-  ""ElemA4"": 52,
-  ""ElemB4"": 100,
-  ""ElemA5"": 53,
-  ""ElemB5"": 101,
+  ""Elem0"": 48,
+  ""Elem1"": 49,
+  ""Elem2"": 50,
+  ""Elem3"": 51,
+  ""Elem4"": 52,
+  ""Elem5"": 53,
   ""Forgat1"": 107,
   ""Forgat2"": 109,
   ""Lerak"": 13,
@@ -252,7 +246,7 @@ namespace Labirintus
             Adatok.gombok = JsonSerializer.Deserialize<Gombok>(File.ReadAllText(Adatok.mappa+@"\beallitasok\gombok.json"));
             Console.WriteLine(szoveg.SikeresBeallit[2]);
             Console.ReadKey();
-            Szin();
+            Gombok();
         }
     }
 
