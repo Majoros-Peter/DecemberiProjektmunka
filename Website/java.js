@@ -69,13 +69,17 @@ once: true,
 function selectLan() {
   let select = document.getElementById('language').value ;
   let rules1 = document.getElementById('Rules1');
+  let rules2 = document.getElementById('Rules2');
+  let rules3 = document.getElementById('Rules3');
    if(document.getElementById('language').value === 'eu'){
    document.getElementById('rulesTitle').innerHTML = "ANGOL";
    rules1.innerHTML = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa laudantium blanditiis fugit"
   }
   else{
-    document.getElementById('rulesTitle').innerHTML = "SZABÁLYZAT";
-    rules1.innerHTML = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa laudantium blanditiis fugitvelit accusantium dolore asperiores culpa sunt voluptatum magni! Voluptatum, error veroeveniet dolor natus at explicabo voluptatem accusamus!Deserunt facere itaque minima laboriosam quae corrupti, dolores, in sequi sunt numquamsed aliquam inventore reprehenderit adipisci esse, earum, soluta quasi!" 
+    document.getElementById('rulesTitle').innerHTML = "SZABÁLYZAT/IRÁNYÍTÁS";
+    rules1.innerHTML = "Menüben navigálás"
+    rules2.innerHTML = "Térkép szerkesztőben irányítás"
+    rules3.innerHTML = "Játékban irányítás"
   }
    }
   
