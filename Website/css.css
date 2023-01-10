@@ -6,8 +6,8 @@ html {
   scroll-behavior: smooth;
 }
 .column {
-  float: left;
-  width: 50%;
+  margin: auto;
+  width: 80%;
   margin-bottom: 16px;
   padding: 0 8px;
 }
@@ -29,8 +29,11 @@ html {
 }
 .column p{
   font-family: Arial;
-  padding-top:10%;
+  
+}
 
+li{
+  margin-left:10%;
 }
 body {
   margin: 0px;
@@ -38,6 +41,7 @@ body {
   background-size: cover;
   background-image: url(Images/1876.jpg);
   padding: 0px;
+  overflow-x: hidden;
 }
 
 .right {
@@ -49,6 +53,7 @@ body {
   background-color: rgba(17, 17, 17, 0.4);
   margin: 0px;
   padding-top: 0.3rem;
+ 
 }
 
 img {
@@ -139,6 +144,7 @@ select{
   
   
 }
+
 @font-face {
   font-family: "oswald";
   src: url("Fonts/ARCADECLASSIC.TTF");
@@ -171,12 +177,38 @@ select{
   font-size: 1.3rem;
   font-family: "oswald2";
   padding-bottom: 4rem;
+  width: 70%;
+  margin-left: 14%;
+  margin-top:20rem;
+  text-align: center;
+  
+}
+@media screen and (max-width: 800px) {
+  .rules {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding-left:1rem;
+    overflow: hidden;
+  }
+  
 }
 
+@media screen and (max-width: 800px) {
+  .rules {
+    display: block;
+   
+    margin:15rem 0rem 15rem 0rem;
+  }}
 @media screen and (min-width: 890px) {
   .rules {
     position: relative;
   }
+}
+
+#RulesDescription1,#RulesDescription2,#RulesDescription3{
+ 
+  transition: 1s;
 }
 .container {
   width: 90%;
