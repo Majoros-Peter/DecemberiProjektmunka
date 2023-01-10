@@ -11,15 +11,9 @@ namespace Labirintus
         {
             int termekSzama = 0;
             for (int sorIndex = 0; sorIndex < map.GetLength(0); sorIndex++)
-            {
                 for (int oszlopIndex = 0; oszlopIndex < map.GetLength(1); oszlopIndex++)
-                {
                     if (map[sorIndex, oszlopIndex] == '█')
-                    {
                         termekSzama++;
-                    }
-                }
-            }
             return termekSzama;
         }
         /// <summary>
@@ -31,18 +25,18 @@ namespace Labirintus
         {
 
             int kijaratokSzama = 0;
-            for (int sorIndex = 0; sorIndex < map.GetLength(0); sorIndex++)
+            for (byte sorIndex = 0; sorIndex < map.GetLength(0); sorIndex++)
             {
-                if (map[sorIndex, 0] == '═') //bal szélső oszlop
+                if ("╬╩║╣╠╝╚".Contains(map[sorIndex, 0]))
                     kijaratokSzama++;
-                if (map[sorIndex, map.GetLength(1) - 1] == '═') //jobb szélső oszlop
+                if ("╬╦║╣╠╗╔".Contains(map[sorIndex, map.GetLength(1) - 1]))
                     kijaratokSzama++;
             }
-            for (int oszlopIndexe = 1; oszlopIndexe < map.GetLength(1) - 1; oszlopIndexe++)
+            for (byte oszlopIndex = 0; oszlopIndex < map.GetLength(1); oszlopIndex++)
             {
-                if (map[0, oszlopIndexe] == '║') //felső sor
+                if ("╬═╦╩╣╗╝".Contains(map[0, oszlopIndex]))
                     kijaratokSzama++;
-                if (map[map.GetLength(0) - 1, oszlopIndexe] == '║') //alsó sor
+                if ("╬═╦╩╠╚╔".Contains(map[map.GetLength(0) - 1, oszlopIndex]))
                     kijaratokSzama++;
             }
             return kijaratokSzama;
@@ -57,19 +51,11 @@ namespace Labirintus
             bool karakterEllenorzo = true;
             char[] karakterekTombje = { '╬', '═', '╦', '╩', '║', '╣', '╠', '╗', '╝', '╚', '╔', '█', '.' };
             for (int sorIndex = 0; sorIndex < map.GetLength(0); sorIndex++)
-            {
                 for (int oszlopIndex = 0; oszlopIndex < map.GetLength(1); oszlopIndex++)
-                {
                     if (karakterekTombje.Contains(map[sorIndex, oszlopIndex]))
-                    {
                         karakterEllenorzo = true;
-                    }
                     else
-                    {
                         karakterEllenorzo = false;
-                    }
-                }
-            }
             return karakterEllenorzo;
         }
         /// <summary>
@@ -79,32 +65,22 @@ namespace Labirintus
         /// <returns>A pozíciók "sor_index:oszlop_index" formátumban szerepelnek a lista elemeiként
         public static List<string> GetUnavailableElements(char[,] map)
         {
+            List<string> unavailables = new();
+
             for (int sorIndex = 0; sorIndex < map.GetLength(0); sorIndex++)
-            {
                 for (int oszlopIndex = 0; oszlopIndex < map.GetLength(1); oszlopIndex++)
                 {
-                    switch (map[sorIndex, oszlopIndex])
-                    {
-                        case '╔':
-                            //if (map[sorIndex+1, oszlopIndex].Contains(jobbraLehet) && map[sorIndex, oszlopIndex+1].Contains(lefeleLehet))
-                            //else 
-                            break;
-                        case '╗':
-                            //if (map[sorIndex-1, oszlopIndex].Contains(balraLehet)  && map[sorIndex, oszlopIndex+1].Contains(lefeleLehet))
-                            //else 
-                            break;
-                        case '╝':
-                            //if (map[sorIndex-1, oszlopIndex].Contains(balraLehet) && map[sorIndex, oszlopIndex-1].Contains(felfeleLehet))
-                            //else 
-                            break;
-                        case '╚':
-                            //if (map[sorIndex+1, oszlopIndex].Contains(jobbraLehet) && map[sorIndex, oszlopIndex-1].Contains(felfeleLehet))
-                            //else 
-                            break;
-                    }
+                    if (oszlopIndex > 0 && "╬╩║╣╠╝╚█".Contains(map[sorIndex, oszlopIndex]) && "╬╦║╣╠╗╔█".Contains(map[sorIndex, oszlopIndex - 1]))
+                        continue;
+                    if (oszlopIndex + 1 < map.GetLength(1) && "╬╦║╣╠╗╔█".Contains(map[sorIndex, oszlopIndex]) && "╬╩║╣╠╝╚█".Contains(map[sorIndex, oszlopIndex + 1]))
+                        continue;
+                    if (sorIndex > 0 && "╬═╦╩╣╗╝█".Contains(map[sorIndex, oszlopIndex]) && "╬═╦╩╠╚╔█".Contains(map[sorIndex - 1, oszlopIndex]))
+                        continue;
+                    if (sorIndex + 1 < map.GetLength(0) && "╬═╦╩╠╚╔█".Contains(map[sorIndex, oszlopIndex]) && "╬═╦╩╣╗╝█".Contains(map[sorIndex + 1, oszlopIndex]))
+                        continue;
+                    unavailables.Add(Koordinata((byte)sorIndex, (byte)oszlopIndex));
                 }
-            }
-            List<string> unavailables = new List<string>();
+
             // ?
             // pld: string poz = "4:12"; 
 
@@ -118,7 +94,13 @@ namespace Labirintus
         /// <returns>A létrehozott labirintus térképe</returns>
         public static char[,] GenerateLabyrinth(List<string> positionsList)
         {
+            byte[] seged;
+            List<string> koord = new() { "0;0", "0;1", "1;1", "0;2" };
+            foreach (string s in koord)
+            {
+                seged = Koordinata(s);
 
+            }
             return null;
         }
         public static byte[] Koordinata(string bekeres)
@@ -132,30 +114,30 @@ namespace Labirintus
 
         public static string Koordinata(byte egyikSzam, byte masikSzam)
         {
-            return Convert.ToString(egyikSzam)+";"+Convert.ToString(masikSzam);
+            return Convert.ToString(egyikSzam) + ";" + Convert.ToString(masikSzam);
         }
 
         public static string Koordinata(byte[] tomb)
         {
-            return Convert.ToString(tomb[0])+";"+Convert.ToString(tomb[1]);
+            return Convert.ToString(tomb[0]) + ";" + Convert.ToString(tomb[1]);
         }
 
-        public static void Valaszt(string[] szoveg, Action[] methods, string cim="")
+        public static void Valaszt(string[] szoveg, Action[] methods, string cim = "")
         {
-            byte hanyadik = 0, felsoBekezdes = (byte)((Console.WindowHeight-(10+szoveg.Length))/2);
+            byte hanyadik = 0, felsoBekezdes = (byte)((Console.WindowHeight - (10 + szoveg.Length)) / 2);
             byte szelesseg = (byte)Console.WindowWidth, magassag = (byte)Console.WindowHeight;
 
-            Rajzol:
+        Rajzol:
             Console.Clear();
-            if(cim!="")
+            if (cim != "")
             {
-                Console.SetCursorPosition((Console.WindowWidth-cim.Length)/2, felsoBekezdes);
-                Console.WriteLine(cim+"\n");
+                Console.SetCursorPosition((Console.WindowWidth - cim.Length) / 2, felsoBekezdes);
+                Console.WriteLine(cim + "\n");
             }
             for (byte i = 0; i < szoveg.Length; i++)
             {
                 Console.ResetColor();
-                Console.SetCursorPosition((Console.WindowWidth-szoveg[i].Length)/2-2, felsoBekezdes+i+2);
+                Console.SetCursorPosition((Console.WindowWidth - szoveg[i].Length) / 2 - 2, felsoBekezdes + i + 2);
                 if (i == hanyadik)
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
@@ -172,25 +154,25 @@ namespace Labirintus
                         if (hanyadik == 0)
                             break;
                         Console.ResetColor();
-                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
+                        Console.SetCursorPosition((Console.WindowWidth - szoveg[hanyadik].Length) / 2 - 2, felsoBekezdes + hanyadik + 2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.White;
                         hanyadik--;
-                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
+                        Console.SetCursorPosition((Console.WindowWidth - szoveg[hanyadik].Length) / 2 - 2, felsoBekezdes + hanyadik + 2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ResetColor();
                         break;
                     case ConsoleKey.DownArrow:
-                        if (hanyadik == szoveg.Length-1)
+                        if (hanyadik == szoveg.Length - 1)
                             break;
                         Console.ResetColor();
-                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
+                        Console.SetCursorPosition((Console.WindowWidth - szoveg[hanyadik].Length) / 2 - 2, felsoBekezdes + hanyadik + 2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.White;
                         hanyadik++;
-                        Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
+                        Console.SetCursorPosition((Console.WindowWidth - szoveg[hanyadik].Length) / 2 - 2, felsoBekezdes + hanyadik + 2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ResetColor();
                         break;
@@ -205,7 +187,7 @@ namespace Labirintus
                     default:
                         break;
                 }
-                if(Console.WindowWidth != szelesseg)
+                if (Console.WindowWidth != szelesseg)
                 {
                     szelesseg = (byte)Console.WindowWidth;
                     goto Rajzol;
