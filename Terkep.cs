@@ -9,7 +9,7 @@ namespace Labirintus
         private static SzinIndex szin = Adatok.szinek;
         private static Gombok gombok = Adatok.gombok;
 
-        public static void TerkepMain() => M.Valaszt(new string[] { szoveg.Sajat, szoveg.General, szoveg.Modositas, szoveg.Vissza }, new Action[] { SajatPalya, GeneralPalya, MeglevoModositas,  P.Valaszt}, szoveg.Cim[2]);
+        public static void TerkepMain() => M.Valaszt(new string[] { szoveg.Sajat, szoveg.General, szoveg.Modositas, szoveg.Vissza }, new Action[] { SajatPalya, GeneralPalya, MeglevoModositas,  P.Valaszt}, szoveg.Cim[1]);
             
         private static void SajatPalya()
         {
@@ -62,8 +62,8 @@ namespace Labirintus
                 }
 
                 MentTerkepet(eleresiUt);
-                return;
             }
+            TerkepMain();
         }
 
         private static void GeneralPalya()
@@ -120,8 +120,8 @@ namespace Labirintus
                 }
 
                 MentTerkepet(eleresiUt);
-                return;
             }
+            TerkepMain();
         }
 
         private static void MeglevoModositas()
@@ -154,6 +154,7 @@ namespace Labirintus
                 Console.Clear();
                 MentTerkepet(eleresiUt);
             }
+            TerkepMain();
         }
 
         private static void PalyaRajzol()
@@ -215,11 +216,11 @@ namespace Labirintus
             }
         }
 
-        private static byte[] GombNyomas(ref byte[] koord, ref byte index, ref byte forgatas, byte input)
+        private static byte[] GombNyomas(ref byte[] koord, ref byte index, ref byte forgatas, byte nyomottGomb)
         {
             //MOZGATÁS
             //FEL
-            if (gombok.Fel == input)
+            if (gombok.Fel == nyomottGomb)
             {
                 Console.SetCursorPosition(koord[0] + oldalBekezdes, koord[1] + felsoBekezdes);
                 BeirElem(koord[0], koord[1]);
@@ -228,7 +229,7 @@ namespace Labirintus
                 koord[1]--;
             }
             //LE
-            else if (gombok.Le == input)
+            else if (gombok.Le == nyomottGomb)
             {
                 Console.SetCursorPosition(koord[0] + oldalBekezdes, koord[1] + felsoBekezdes);
                 BeirElem(koord[0], koord[1]);
@@ -237,7 +238,7 @@ namespace Labirintus
                 koord[1]++;
             }
             //BAL     
-            else if (gombok.Bal == input)
+            else if (gombok.Bal == nyomottGomb)
             {
                 Console.SetCursorPosition(koord[0] + oldalBekezdes, koord[1] + felsoBekezdes);
                 BeirElem(koord[0], koord[1]);
@@ -246,7 +247,7 @@ namespace Labirintus
                 koord[0]--;
             }
             //JOBB
-            else if (gombok.Jobb == input)
+            else if (gombok.Jobb == nyomottGomb)
             {
                 Console.SetCursorPosition(koord[0] + oldalBekezdes, koord[1] + felsoBekezdes);
                 BeirElem(koord[0], koord[1]);
@@ -256,70 +257,68 @@ namespace Labirintus
             }
             //ELEM KIVÁLASZTÁS
             //0
-            else if (gombok.Elem0 == input)
+            else if (gombok.Elem0 == nyomottGomb)
             {
                 forgatas = 0;
                 index = 0;
             }
             //1
-            else if (gombok.Elem1 == input)
+            else if (gombok.Elem1 == nyomottGomb)
             {
                 forgatas = 0;
                 index = 1;
             }
             //2
-            else if (gombok.Elem2 == input)
+            else if (gombok.Elem2 == nyomottGomb)
             {
                 forgatas = 0;
                 index = 2;
             }
             //3
-            else if (gombok.Elem3 == input)
+            else if (gombok.Elem3 == nyomottGomb)
             {
                 forgatas = 0;
                 index = 3;
             }
             //4
-            else if (gombok.Elem4 == input)
+            else if (gombok.Elem4 == nyomottGomb)
             {
                 forgatas = 0;
                 index = 4;
             }
             //5
-            else if (gombok.Elem5 == input)
+            else if (gombok.Elem5 == nyomottGomb)
             {
                 forgatas = 0;
                 index = 5;
             }
             //FORGATÁS
             //-
-            else if (gombok.Forgat1 == input)
+            else if (gombok.Forgat1 == nyomottGomb)
             {
                 if (forgatas == 0)
                     forgatas = 4;
                 forgatas--;
             }
             //+
-            else if (gombok.Forgat2 == input)
+            else if (gombok.Forgat2 == nyomottGomb)
             {
                 forgatas++;
                 forgatas %= 4;
             }
             //LERAKÁS
             //ENTER
-            else if(gombok.Lerak == input)
+            else if(gombok.Lerak == nyomottGomb)
             {
                 matrix[koord[0], koord[1]] = karakterek[index, forgatas];
             }
             //KILÉPÉS
-            else if (gombok.Kilep == input)
+            else if (gombok.Kilep == nyomottGomb)
                 vege = true;
-            else
-                return koord;
             return koord;
         }
 
-        private static void General(string koord)
+        public static void General(string koord)
         {
             List<string> meglatogatott = new(), vizsgalandok = new() { koord };
 
@@ -346,7 +345,7 @@ namespace Labirintus
             }
         }
 
-        private static List<string> MelleRak(byte[] koord)
+        public static List<string> MelleRak(byte[] koord)
         {
             List<string> szomszedok = new();
             byte x = koord[0], y = koord[1];
@@ -464,7 +463,7 @@ namespace Labirintus
             Console.WriteLine(szoveg.SikeresMentes);
         }
 
-        private static char[,] Betolt(string palyaNeve)
+        public static char[,] Betolt(string palyaNeve)
         {
             string[] sorok = File.ReadAllLines($"{Adatok.mappa}/{palyaNeve}.txt");
             char[,] palya = new char[sorok[0].Length, sorok.Length];

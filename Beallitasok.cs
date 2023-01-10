@@ -56,7 +56,7 @@ namespace Labirintus
             szovegek[9] = szoveg.Alapertelmezett;
             szovegek[10] = szoveg.Vissza;
 
-            M.Valaszt(szovegek, new Action[] { LKSz, LSz, UHSz, KSz, ESz, EKSz, ESSz, BLSz, SzSz, AlapertelmezettSzin, BeallitasokMain }, szoveg.Cim[5]);
+            M.Valaszt(szovegek, new Action[] { ()=>SzinAtallit(0), ()=>SzinAtallit(1), ()=>SzinAtallit(2), ()=>SzinAtallit(3), ()=>SzinAtallit(4), ()=>SzinAtallit(5), ()=>SzinAtallit(6), ()=>SzinAtallit(7), ()=>SzinAtallit(8), AlapertelmezettSzin, BeallitasokMain }, szoveg.Cim[5]);
         }
         private static void Gombok()
         {
@@ -66,18 +66,10 @@ namespace Labirintus
             szovegek[14] = szoveg.Alapertelmezett;
             szovegek[15] = szoveg.Vissza;
 
-            M.Valaszt(szovegek, new Action[] { Fel, Le, Bal, Jobb, E0, E1, E2, E3, E4, E5, F1, F2, L, K, AlapertelmezettGombok, BeallitasokMain }, szoveg.Cim[6]);
+            M.Valaszt(szovegek, new Action[] { ()=>GombokBeker(0, Adatok.gombok.Fel), ()=>GombokBeker(1, Adatok.gombok.Le), ()=>GombokBeker(2, Adatok.gombok.Bal), ()=>GombokBeker(3, Adatok.gombok.Jobb), ()=>GombokBeker(4, Adatok.gombok.Elem0),
+                ()=>GombokBeker(5, Adatok.gombok.Elem1), ()=>GombokBeker(6, Adatok.gombok.Elem2), ()=>GombokBeker(7, Adatok.gombok.Elem3), ()=>GombokBeker(8, Adatok.gombok.Elem4), ()=>GombokBeker(9, Adatok.gombok.Elem5),
+                ()=>GombokBeker(10, Adatok.gombok.Forgat1), ()=>GombokBeker(11, Adatok.gombok.Forgat2), ()=>GombokBeker(12, Adatok.gombok.Lerak), ()=>GombokBeker(13, Adatok.gombok.Kilep), AlapertelmezettGombok, BeallitasokMain }, szoveg.Cim[6]);
         }
-
-        private static void LKSz() => SzinAtallit(0);
-        private static void LSz() => SzinAtallit(1);
-        private static void UHSz() => SzinAtallit(2);
-        private static void KSz() => SzinAtallit(3);
-        private static void ESz() => SzinAtallit(4);
-        private static void EKSz() => SzinAtallit(5);
-        private static void ESSz() => SzinAtallit(6);
-        private static void BLSz() => SzinAtallit(7);
-        private static void SzSz() => SzinAtallit(8);
 
         private static void SzinAtallit(byte index)
         {
@@ -87,26 +79,9 @@ namespace Labirintus
                 szovegek[i] = szoveg.Szinek[i];
             szovegek[16] = szoveg.Vissza;
 
-            M.Valaszt(szovegek, new Action[] {Fekete, SKek, SZold, SCian, SPiros, SMagenta, SSarga, Szurke, SSzurke, Kek, Zold, Cian, Piros, Magenta, Sarga, Feher, Szin }, szoveg.SzinezhetoDolgok[index]);
+            M.Valaszt(szovegek, new Action[] { ()=>BeallitSzin(0), ()=>BeallitSzin(1), ()=>BeallitSzin(2), ()=>BeallitSzin(3), ()=>BeallitSzin(4), ()=>BeallitSzin(5), ()=>BeallitSzin(6), ()=>BeallitSzin(7), ()=>BeallitSzin(8),
+                ()=>BeallitSzin(9), ()=>BeallitSzin(10), ()=>BeallitSzin(11), ()=>BeallitSzin(12), ()=>BeallitSzin(13), ()=>BeallitSzin(14), ()=>BeallitSzin(15), Szin }, szoveg.SzinezhetoDolgok[index]);
         }
-
-        private static void Fekete() => BeallitSzin(0);
-        private static void SKek() => BeallitSzin(1);
-        private static void SZold() => BeallitSzin(2);
-        private static void SCian() => BeallitSzin(3);
-        private static void SPiros() => BeallitSzin(4);
-        private static void SMagenta() => BeallitSzin(5);
-        private static void SSarga() => BeallitSzin(6);
-        private static void Szurke() => BeallitSzin(7);
-        private static void SSzurke() => BeallitSzin(8);
-        private static void Kek() => BeallitSzin(9);
-        private static void Zold() => BeallitSzin(10);
-        private static void Cian() => BeallitSzin(11);
-        private static void Piros() => BeallitSzin(12);
-        private static void Magenta() => BeallitSzin(13);
-        private static void Sarga() => BeallitSzin(14);
-        private static void Feher() => BeallitSzin(15);
-
         private static void BeallitSzin(byte szinIndex)
         {
             switch (hanyadik)
@@ -130,10 +105,10 @@ namespace Labirintus
                     Adatok.szinek.ElemKereteSzine = szinIndex;
                     break;
                 case 6:
-                    Adatok.szinek.ElemSorszamSzine = szinIndex;
+                    Adatok.szinek.BejartLabirintusSzine = szinIndex;
                     break;
                 case 7:
-                    Adatok.szinek.BejartLabirintusSzine = szinIndex;
+                    Adatok.szinek.ElemSorszamSzine = szinIndex;
                     break;
                 case 8:
                     Adatok.szinek.SzovegSzine = szinIndex;
@@ -145,7 +120,6 @@ namespace Labirintus
 
             Szin();
         }
-
         private static void AlapertelmezettSzin()
         {
             File.WriteAllText(Adatok.mappa+@"\beallitasok\szinek.json", Adatok.szinek.nyelv ? SZINEKJSON1 : SZINEKJSON2);
@@ -164,21 +138,6 @@ namespace Labirintus
             Console.ReadKey();
         }
 
-        private static void Fel() => GombokBeker(0, Adatok.gombok.Fel);
-        private static void Le() => GombokBeker(1, Adatok.gombok.Le);
-        private static void Bal() => GombokBeker(2, Adatok.gombok.Bal);
-        private static void Jobb() => GombokBeker(3, Adatok.gombok.Jobb);
-        private static void E0() => GombokBeker(4, Adatok.gombok.Elem0);
-        private static void E1() => GombokBeker(5, Adatok.gombok.Elem1);
-        private static void E2() => GombokBeker(6, Adatok.gombok.Elem2);
-        private static void E3() => GombokBeker(7, Adatok.gombok.Elem3);
-        private static void E4() => GombokBeker(8, Adatok.gombok.Elem4);
-        private static void E5() => GombokBeker(9, Adatok.gombok.Elem5);
-        private static void F1() => GombokBeker(10, Adatok.gombok.Forgat1);
-        private static void F2() => GombokBeker(11, Adatok.gombok.Forgat2);
-        private static void L() => GombokBeker(12, Adatok.gombok.Lerak);
-        private static void K() => GombokBeker(13, Adatok.gombok.Kilep);
-
         private static void GombokBeker(byte index, byte gomb)
         {
             Console.WriteLine(szoveg.GombBeker[0] + szoveg.Gombok[index] + szoveg.GombBeker[1] + T.GombSzoveg(gomb) + szoveg.GombBeker[2]);
@@ -190,7 +149,6 @@ namespace Labirintus
             File.WriteAllText(Adatok.mappa+@"\beallitasok\gombok.json", JsonSerializer.Serialize(Adatok.gombok, new JsonSerializerOptions { WriteIndented = true }));
             Gombok();
         }
-
         private static void GombokBeallit(byte hanyadik)
         {
             switch (hanyadik)
@@ -239,7 +197,6 @@ namespace Labirintus
                     break;
             }
         }
-
         private static void AlapertelmezettGombok()
         {
             File.WriteAllText(Adatok.mappa+@"\beallitasok\gombok.json", GOMBOKJSON);

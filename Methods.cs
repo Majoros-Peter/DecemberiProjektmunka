@@ -154,8 +154,7 @@ namespace Labirintus
             }
             for (byte i = 0; i < szoveg.Length; i++)
             {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ResetColor();
                 Console.SetCursorPosition((Console.WindowWidth-szoveg[i].Length)/2-2, felsoBekezdes+i+2);
                 if (i == hanyadik)
                 {
@@ -172,8 +171,7 @@ namespace Labirintus
                     case ConsoleKey.UpArrow:
                         if (hanyadik == 0)
                             break;
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ResetColor();
                         Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ForegroundColor = ConsoleColor.Black;
@@ -181,14 +179,12 @@ namespace Labirintus
                         hanyadik--;
                         Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ResetColor();
                         break;
                     case ConsoleKey.DownArrow:
                         if (hanyadik == szoveg.Length-1)
                             break;
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ResetColor();
                         Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
                         Console.ForegroundColor = ConsoleColor.Black;
@@ -196,8 +192,7 @@ namespace Labirintus
                         hanyadik++;
                         Console.SetCursorPosition((Console.WindowWidth-szoveg[hanyadik].Length)/2-2, felsoBekezdes+hanyadik+2);
                         Console.Write($">>{szoveg[hanyadik]}<<");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ResetColor();
                         break;
                     case ConsoleKey.Enter:
                         Console.Clear();
