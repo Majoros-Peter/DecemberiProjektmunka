@@ -12,7 +12,6 @@ html {
   padding: 0 8px;
 }
 
-
 @media screen and (max-width: 700px) {
   .column {
     display: block;
@@ -445,8 +444,8 @@ select{
 
 .numbertext {
   font-family: 'arial';
-  color: black;
-  font-size: 12px;
+  color: rgb(255, 254, 254);
+  font-size: 20px;
   padding: 8px 12px;
   position: absolute;
   top: 0;
