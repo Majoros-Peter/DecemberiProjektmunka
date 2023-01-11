@@ -5,4 +5,5 @@
 >>- Stiegermayer Bálint ***Methods.cs***, ***Website***
 >># ⠀
 >>### Extrák:
->>- **Szín**, **nyelv**, és **gomb** beállítások
+>>- ***Szín***, ***nyelv***, és ***gomb*** beállítások
+>>- ***Fedett térkép***, ***fényvesztő***, ***vakság*** nehézségek 
