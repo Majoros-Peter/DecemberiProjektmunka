@@ -247,6 +247,7 @@ namespace Labirintus
         public string[] Informaciok { get; set; }
         public string[] Iranyok { get; set; }
         public string VakVagy { get; set; }
+        public string Gratulalok { get; set; }
     }
 
     class SzinIndex

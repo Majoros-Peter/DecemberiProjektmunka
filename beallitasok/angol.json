@@ -95,7 +95,7 @@
   "AlapJatek": "Normal game",
   "Nehezitesek": [
     "Covered map",
-    "Darkness",
+    "Disappearing light",
     "Blindness"
   ],
   "Informaciok": [
@@ -104,11 +104,13 @@
     "You can go this way:",
     "Explored treasure rooms"
   ],
-  "Irányok": [
+  "Iranyok": [
     " N",
     " S",
     " W",
     " E"
   ],
-  "VakVagy": " You are blind"
+    "VakVagy": " You are blind",
+    "Gratulalok":  "Congratulations! You have completed the game!"
+
 }

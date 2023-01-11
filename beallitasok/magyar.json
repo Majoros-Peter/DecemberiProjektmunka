@@ -95,7 +95,7 @@
   "AlapJatek": "Alap játék",
   "Nehezitesek": [
     "Fedett térkép",
-    "Sötét",
+    "Fényvesztés",
     "Vakság"
   ],
   "Informaciok": [
@@ -104,11 +104,13 @@
     "Ebbe az irányba mehetsz:",
     "Felfedezett kincses termek száma"
   ],
-  "Irányok": [
+  "Iranyok": [
     " É",
     " D",
     " Ny",
     " K"
   ],
-  "VakVagy": " Vak vagy"
+    "VakVagy": " Vak vagy",
+    "Gratulalok":  "Gratulálok! Kivitted a játékot!"
+      
 }
