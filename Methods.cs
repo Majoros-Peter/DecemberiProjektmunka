@@ -92,16 +92,65 @@ namespace Labirintus
         /// </summary>
         /// <param name="positionsList">"sor_index:oszlop_index" formátumban az egymáshoz kapcsolódó járatok pozícióit tartalmazó lista </param>
         /// <returns>A létrehozott labirintus térképe</returns>
-        public static char[,] GenerateLabyrinth(List<string> positionsList)
+        public static char[,] GenerateLabyrinth(List<string> positionsList, byte magassag, byte hossz)
         {
+            char[,] matrix = new char[hossz, magassag];
+            for (byte sor = 0; sor < hossz; sor++)
+                for (byte oszlop = 0; oszlop < magassag; oszlop++)
+                    matrix[sor, oszlop] = '.';
+
+
             byte[] seged;
-            List<string> koord = new() { "0;0", "0;1", "1;1", "0;2" };
-            foreach (string s in koord)
+            bool fel = false, le = false, jobb = false, bal = false;
+            
+            foreach (string s in positionsList)
             {
                 seged = Koordinata(s);
 
+                if (seged[1] > 0)
+                    fel = positionsList.Contains(Koordinata(seged[0], (byte)(seged[1]-1)));
+                if (seged[1]+1 < magassag)
+                    le = positionsList.Contains(Koordinata(seged[0], (byte)(seged[1]+1)));
+                if (seged[0] > 0)
+                    bal = positionsList.Contains(Koordinata((byte)(seged[0]-1), seged[1]));
+                if (seged[0]+1 < hossz)
+                    jobb = positionsList.Contains(Koordinata((byte)(seged[0]+1), seged[1]));
+
+
+                if (fel && le && bal && jobb)
+                    matrix[seged[0], seged[1]] = '╬';
+
+                else if (fel && le && bal)
+                    matrix[seged[0], seged[1]] = '╣';
+
+                else if (fel && le && jobb)
+                    matrix[seged[0], seged[1]] = '╠';
+
+                else if (fel && bal && jobb)
+                    matrix[seged[0], seged[1]] = '╩';
+
+                else if (le && bal && jobb)
+                    matrix[seged[0], seged[1]] = '╦';
+
+                else if (le && bal)
+                    matrix[seged[0], seged[1]] = '╗';
+
+                else if (fel && bal)
+                    matrix[seged[0], seged[1]] = '╝';
+
+                else if (fel && jobb)
+                    matrix[seged[0], seged[1]] = '╚';
+
+                else if (le && jobb)
+                    matrix[seged[0], seged[1]] = '╔';
+
+                else if (fel || le)
+                    matrix[seged[0], seged[1]] = '║';
+
+                else if(bal || jobb)
+                    matrix[seged[0], seged[1]] = '═';
             }
-            return null;
+            return matrix;
         }
         public static byte[] Koordinata(string bekeres)
         {
