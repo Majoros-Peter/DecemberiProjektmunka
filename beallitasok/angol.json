@@ -6,7 +6,8 @@
     "Options",
     "Language Settings",
     "Color Settings",
-    "Control Settings"
+    "Control Settings",
+    "Hardships"
   ],
   "Kilepes": "Exit",
   "Vissza": "Back",
@@ -23,7 +24,8 @@
   ],
   "BekerPalyaNev": [
     "Type in the name of the labyrinth to save it: ",
-    "Type in the name of the labyrinth, that you want to edit: "
+    "Type in the name of the labyrinth, that you want to edit: ",
+    "Type in the name of the labyrinth to load it in: "
   ],
   "LetezoPalya": "There's already a labyrinth with this name, do you really want to change it (I/N)?: ",
   "SikeresMentes": "Successfully saved!",
@@ -89,5 +91,24 @@
     "' button is assigned.",
     "Press a button!",
     "', now the '"
-  ]
+  ],
+  "AlapJatek": "Normal game",
+  "Nehezitesek": [
+    "Covered map",
+    "Darkness",
+    "Blindness"
+  ],
+  "Informaciok": [
+    "Name of the map",
+    "Size of the map",
+    "You can go this way:",
+    "Explored treasure rooms"
+  ],
+  "Irányok": [
+    " N",
+    " S",
+    " W",
+    " E"
+  ],
+  "VakVagy": " You are blind"
 }

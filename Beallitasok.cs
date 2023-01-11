@@ -242,6 +242,11 @@ namespace Labirintus
         public string GombBeallitas { get; set; }
         public string[] Gombok { get; set; }
         public string[] GombBeker { get; set; }
+        public string AlapJatek { get; set; }
+        public string[] Nehezitesek { get; set; }
+        public string[] Informaciok { get; set; }
+        public string[] Iranyok { get; set; }
+        public string VakVagy { get; set; }
     }
 
     class SzinIndex

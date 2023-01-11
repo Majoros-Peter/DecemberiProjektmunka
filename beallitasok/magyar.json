@@ -6,7 +6,8 @@
     "Beállítások",
     "Nyelv Beállítások",
     "Szín Beállítások",
-    "Gomb Beállítások"
+    "Gomb Beállítások",
+    "Nehezítések"
   ],
   "Kilepes": "Kilépés",
   "Vissza": "Vissza",
@@ -23,7 +24,8 @@
   ],
   "BekerPalyaNev": [
     "Adja meg a pálya nevét a mentéshez: ",
-    "Adja meg a pálya nevét amin változtatni szeretne: "
+    "Adja meg a pálya nevét amin változtatni szeretne: ",
+    "Adja meg a pálya nevét a betöltéséhez: "
   ],
   "LetezoPalya": "Ilyen nevű pálya már létezik, biztosan felül akarod írni (I/N)?",
   "SikeresMentes": "Sikeres Mentés!",
@@ -89,5 +91,24 @@
     "' gomb van hozzáadva.",
     "Nyomj egy gombot!",
     "'-hoz mostmár a(z) '"
-  ]
+  ],
+  "AlapJatek": "Alap játék",
+  "Nehezitesek": [
+    "Fedett térkép",
+    "Sötét",
+    "Vakság"
+  ],
+  "Informaciok": [
+    "Pálya neve",
+    "Pálya mérete",
+    "Ebbe az irányba mehetsz:",
+    "Felfedezett kincses termek száma"
+  ],
+  "Irányok": [
+    " É",
+    " D",
+    " Ny",
+    " K"
+  ],
+  "VakVagy": " Vak vagy"
 }

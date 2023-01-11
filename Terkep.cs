@@ -2,6 +2,7 @@ namespace Labirintus
 {
     class T
     {
+        private static string eleresiUt;
         private static bool vege = false;
         private static byte oldalBekezdes, felsoBekezdes = 3;
         private static char[,] karakterek = { { '.', '.', '.', '.' }, { '║', '═', '║', '═' }, { '╗', '╝', '╚', '╔' }, { '╦', '╣', '╩', '╠' }, { '╬', '╬', '╬', '╬' }, { '█', '█', '█', '█' } }, matrix;
@@ -63,11 +64,13 @@ namespace Labirintus
 
                 MentTerkepet(eleresiUt);
             }
+            vege = false;
             TerkepMain();
         }
 
         private static void GeneralPalya()
         {
+            Console.ForegroundColor = (ConsoleColor)szin.SzovegSzine;
             byte[] szelMag = BekerKoordinata(szoveg.BekerMeret), koord = BekerKoordinata($"{szoveg.BekerKoord[0]} (max: {szelMag[0]-1};{szelMag[1]-1}, {szoveg.BekerKoord[1]}: {(szelMag[0]-1)/2};{(szelMag[1]-1)/2}): ");
             string kezdoKoord = M.Koordinata(koord);
             matrix = new char[szelMag[0], szelMag[1]];
@@ -121,6 +124,7 @@ namespace Labirintus
 
                 MentTerkepet(eleresiUt);
             }
+            vege = false;
             TerkepMain();
         }
 
@@ -128,8 +132,7 @@ namespace Labirintus
         {
             Console.Clear();
             Console.Write(szoveg.BekerPalyaNev[1]);
-            string eleresiUt = Console.ReadLine();
-            matrix = Betolt(eleresiUt);
+            matrix = Betolt(Console.ReadLine(), ref eleresiUt, 1);
             oldalBekezdes = (byte)((Console.WindowWidth-matrix.GetLength(0))/2);
             byte[] koord = { 0, 0 };
 
@@ -154,6 +157,7 @@ namespace Labirintus
                 Console.Clear();
                 MentTerkepet(eleresiUt);
             }
+            vege = false;
             TerkepMain();
         }
 
@@ -463,8 +467,17 @@ namespace Labirintus
             Console.WriteLine(szoveg.SikeresMentes);
         }
 
-        public static char[,] Betolt(string palyaNeve)
+        public static char[,] Betolt(string palyaNeve, ref string eleresiUt, byte i)
         {
+            while(!File.Exists($"{Adatok.mappa}/{palyaNeve}.txt"))
+            {
+                Console.Clear();
+                Console.Write(szoveg.BekerPalyaNev[i]);
+                palyaNeve = Console.ReadLine();
+            }
+
+            eleresiUt = palyaNeve;
+
             string[] sorok = File.ReadAllLines($"{Adatok.mappa}/{palyaNeve}.txt");
             char[,] palya = new char[sorok[0].Length, sorok.Length];
 
@@ -511,7 +524,7 @@ namespace Labirintus
             Console.Write(matrix[x, y]);
         }
 
-        private static void Torol()
+        public static void Torol()
         {
             Console.SetCursorPosition(0, 0);
             for (byte i = 0; i < Console.WindowWidth; i++)

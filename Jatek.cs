@@ -2,28 +2,28 @@
 {
     class J
     {
-        private static byte oldalBekezdes, felsoBekezdes = 3;
         private static char[,] matrix;
-        private static bool sotet = false;
+        private static string eleresiUt;
+        private static byte oldalBekezdes, felsoBekezdes = 3, felfedezettTermek = 0;
+        private static bool fedettTerkep = false, sotet = false, vaksag = false;
         private static SzinIndex szin = Adatok.szinek;
         private static Nyelv szoveg = Adatok.szoveg;
         private static Gombok gombok = Adatok.gombok;
-        public static void JatekMain() => M.Valaszt(new string[] { "Alap játék", "" }, new Action[] { AlapJatek }, szoveg.Cim[2]);
-        public static void NehezsegValaszto() => M.Valaszt(new string[] { "Sötét", "" }, new Action[] { () =>sotet=!sotet } );
+        public static void JatekMain() => M.Valaszt(new string[] { szoveg.AlapJatek, szoveg.Cim[7], szoveg.Vissza }, new Action[] { AlapJatek, NehezsegValaszto, P.Valaszt }, szoveg.Cim[2]);
+        public static void NehezsegValaszto() => M.Valaszt(new string[] { szoveg.Nehezitesek[0], szoveg.Nehezitesek[1], szoveg.Nehezitesek[2], szoveg.Vissza }, new Action[] { () => { fedettTerkep = !fedettTerkep; vaksag = false; NehezsegValaszto(); }, () => { sotet = !sotet; vaksag = false; NehezsegValaszto(); }, ()=> { vaksag = true; NehezsegValaszto(); }, JatekMain }, szoveg.Cim[7] );
 
         private static void AlapJatek()
         {
             Console.ForegroundColor = (ConsoleColor)szin.SzovegSzine;
-            Console.Write(szoveg.BekerPalyaNev[1]);
+            Console.Write(szoveg.BekerPalyaNev[2]);
+            matrix = T.Betolt(Console.ReadLine(), ref eleresiUt, 2);
 
-            matrix = T.Betolt(Console.ReadLine());
             oldalBekezdes = (byte)((Console.WindowWidth-matrix.GetLength(0))/2);
 
             Console.Clear();
             PalyaRajzol();
-            Console.ForegroundColor= (ConsoleColor)szin.LabirintusSzine;
+            Console.ForegroundColor = (ConsoleColor)szin.LabirintusSzine;
             Mozgas();
-
         }
 
         private static void PalyaRajzol()
@@ -76,7 +76,7 @@
             //FEL
             if (gombok.Fel == nyomottGomb)
             {
-                if ("╬╩║╣╠╝╚█".Contains(matrix[koord[0], koord[1]]) && "╬╦║╣╠╗╔█".Contains(matrix[koord[0], koord[1]-1]))
+                if (koord[1] > 0 && "╬╩║╣╠╝╚█".Contains(matrix[koord[0], koord[1]]) && "╬╦║╣╠╗╔█".Contains(matrix[koord[0], koord[1]-1]))
                 {
                     Console.SetCursorPosition(koord[0]+oldalBekezdes, koord[1]+felsoBekezdes);
                     Console.BackgroundColor = (ConsoleColor)0;
@@ -88,7 +88,7 @@
             //LE
             else if (gombok.Le == nyomottGomb)
             {
-                if ("╬╦║╣╠╗╔█".Contains(matrix[koord[0], koord[1]]) && "╬╩║╣╠╝╚█".Contains(matrix[koord[0], koord[1]+1]))
+                if (koord[1]+1 < matrix.GetLength(1) && "╬╦║╣╠╗╔█".Contains(matrix[koord[0], koord[1]]) && "╬╩║╣╠╝╚█".Contains(matrix[koord[0], koord[1]+1]))
                 {
                     Console.SetCursorPosition(koord[0]+oldalBekezdes, koord[1]+felsoBekezdes);
                     Console.BackgroundColor = (ConsoleColor)0;
@@ -100,7 +100,7 @@
             //BAL     
             else if (gombok.Bal == nyomottGomb)
             {
-                if ("╬═╦╩╣╗╝█".Contains(matrix[koord[0], koord[1]]) && "╬═╦╩╠╚╔█".Contains(matrix[koord[0]-1, koord[1]]))
+                if (koord[0] > 0 && "╬═╦╩╣╗╝█".Contains(matrix[koord[0], koord[1]]) && "╬═╦╩╠╚╔█".Contains(matrix[koord[0]-1, koord[1]]))
                 {
                     Console.SetCursorPosition(koord[0]+oldalBekezdes, koord[1]+felsoBekezdes);
                     Console.BackgroundColor = (ConsoleColor)0;
@@ -112,7 +112,7 @@
             //JOBB
             else if (gombok.Jobb == nyomottGomb)
             {
-                if ("╬═╦╩╠╚╔█".Contains(matrix[koord[0], koord[1]]) && "╬═╦╩╣╗╝█".Contains(matrix[koord[0]+1, koord[1]]))
+                if (koord[0]+1 < matrix.GetLength(0) && "╬═╦╩╠╚╔█".Contains(matrix[koord[0], koord[1]]) && "╬═╦╩╣╗╝█".Contains(matrix[koord[0]+1, koord[1]]))
                 {
                     Console.SetCursorPosition(koord[0]+oldalBekezdes, koord[1]+felsoBekezdes);
                     Console.BackgroundColor = (ConsoleColor)0;
@@ -132,10 +132,32 @@
             {
                 Console.BackgroundColor = ConsoleColor.Green;
                 if (matrix[koord[0], koord[1]] == '█')
-                    break;
+                    felfedezettTermek++;
                 Console.Write(matrix[koord[0], koord[1]]);
+                Informaciok(koord);
                 Console.SetCursorPosition(GombNyomas(ref koord, (byte)Console.ReadKey(true).Key)[0]+oldalBekezdes, koord[1]+felsoBekezdes);
             }
+        }
+
+        private static void Informaciok(byte[] koord)
+        {
+            Console.ResetColor();
+            T.Torol();
+            Console.SetCursorPosition(0, 0);
+            Console.Write($"{szoveg.Informaciok[0]}: {eleresiUt}.txt, {szoveg.Informaciok[1]}: {matrix.GetLength(0)}x{matrix.GetLength(1)}");
+            Console.SetCursorPosition(0, 1);
+            Console.Write(szoveg.Informaciok[2]);
+            if (!vaksag)
+            {
+                if (koord[1] > 0 && "╬╩║╣╠╝╚█".Contains(matrix[koord[0], koord[1]]) && "╬╦║╣╠╗╔█".Contains(matrix[koord[0], koord[1]-1])) Console.Write(szoveg.Iranyok[0]);
+                if (koord[1]+1 < matrix.GetLength(1) && "╬╦║╣╠╗╔█".Contains(matrix[koord[0], koord[1]]) && "╬╩║╣╠╝╚█".Contains(matrix[koord[0], koord[1]+1])) Console.Write(szoveg.Iranyok[1]);
+                if (koord[0] > 0 && "╬═╦╩╣╗╝█".Contains(matrix[koord[0], koord[1]]) && "╬═╦╩╠╚╔█".Contains(matrix[koord[0]-1, koord[1]])) Console.Write(szoveg.Iranyok[2]);
+                if (koord[0]+1 < matrix.GetLength(0) && "╬═╦╩╠╚╔█".Contains(matrix[koord[0], koord[1]]) && "╬═╦╩╣╗╝█".Contains(matrix[koord[0]+1, koord[1]])) Console.Write(szoveg.Iranyok[3]);
+            }
+            else
+                Console.Write(szoveg.VakVagy);
+            Console.SetCursorPosition(0, 2);
+            Console.Write($"F{szoveg.Informaciok[3]}: {felfedezettTermek}");
         }
     }
 }
