@@ -112,7 +112,7 @@ select{
   display: none;
 }
 
-@media screen and (max-width: 890px) {
+@media screen and (max-width: 950px) {
   .topnav a:not(:first-child) {
     display: none;
   }
@@ -123,7 +123,7 @@ select{
   }
 }
  
-@media screen and (max-width: 890px) {
+@media screen and (max-width: 950px) {
   .topnav.responsive {
     position: relative;
   }
@@ -160,6 +160,12 @@ select{
   width: 50%;
   font-family: "oswald2";
 }
+@media screen and (max-width: 800px) {
+  #text {
+    margin-left: 3rem;
+  }
+  
+}
 
 .rules {
   display: flex;
@@ -182,6 +188,7 @@ select{
   text-align: center;
   
 }
+
 @media screen and (max-width: 800px) {
   .rules {
     display: block;
@@ -220,13 +227,17 @@ select{
   align-items: center; 
 
 }
+.card h2{
+  color:rgb(32, 32, 32);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-align: center;
 
+}
 .fakeimg{
   float: left;
   width: 100%;
  
-
-
 }
 .szoveg{
   margin-left:5rem;
@@ -245,6 +256,7 @@ select{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin: 8px;
   background-color: #474e5d;
+  border: 5px solid   rgba(63, 64, 121, 0.849);
 }
 @media screen and (max-width: 700px) {
   .column_team {
@@ -426,6 +438,7 @@ select{
 }
 
 
+
 .text {
   color: #f2f2f2;
   font-size: 15px;
@@ -437,9 +450,10 @@ select{
 }
 .text2{
   font-size: 1.5rem;
-  color:white;
+  color:rgb(203, 206, 49);
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
+  font-weight: bold;
 }
 
 .numbertext {
