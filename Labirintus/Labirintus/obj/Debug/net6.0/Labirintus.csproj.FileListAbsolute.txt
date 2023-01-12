@@ -1,0 +1,15 @@
+C:\Users\major\source\repos\Labirintus\Labirintus\bin\Debug\net6.0\Labirintus.exe
+C:\Users\major\source\repos\Labirintus\Labirintus\bin\Debug\net6.0\Labirintus.deps.json
+C:\Users\major\source\repos\Labirintus\Labirintus\bin\Debug\net6.0\Labirintus.runtimeconfig.json
+C:\Users\major\source\repos\Labirintus\Labirintus\bin\Debug\net6.0\Labirintus.dll
+C:\Users\major\source\repos\Labirintus\Labirintus\bin\Debug\net6.0\Labirintus.pdb
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\Labirintus.csproj.AssemblyReference.cache
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\Labirintus.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\Labirintus.AssemblyInfoInputs.cache
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\Labirintus.AssemblyInfo.cs
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\Labirintus.csproj.CoreCompileInputs.cache
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\Labirintus.dll
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\refint\Labirintus.dll
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\Labirintus.pdb
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\Labirintus.genruntimeconfig.cache
+C:\Users\major\source\repos\Labirintus\Labirintus\obj\Debug\net6.0\ref\Labirintus.dll

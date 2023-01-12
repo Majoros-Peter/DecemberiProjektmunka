@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <title>Website</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+</head>
+
+<body>
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top">UP</button>
+
+    <div id="preloader"></div>
+
+
+
+
+    <div class="topnav" id="myTopnav">
+        <a href="#">Home</a>
+        <a href="#TP1" id="nav2">Szabályzat</a>
+        <a href="#TP2" id="nav3">Játékról</a>
+        <a href="#TP3" id="nav4">Csapatról</a>
+   
+        
+        
+        <select id="language"  name="language" onchange="selectLan()">
+            <option value="hu" selected >HU</option>
+            <option value="us">ENG</option>
+        </select>
+   
+        <a href="javascript:void(0);" class="icon" onclick="navBar()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+    <div class="right">
+        <img src="Images/astronaut-1.svg" style="width: 30rem;" id="anim">
+    </div>
+    <div class="flex-container" data-aos="fade-left"></div>
+
+    <div id="text">
+        <h1 id="labirint">Labirintus</h1>
+        <p id="project">Decemberi Projektmunka, Készítette:</p>
+        <ul>
+            
+            <li>Majoros Péter</li>
+            <li>Stiegelmayer Bálint</li>
+            <li>Hegedűs Gergő</li>
+        
+        </ul>
+    </div>
+    </div>
+
+    <div class="rules">
+        <p id="TP1"></p><br>
+        <h1 data-aos="fade-right" id="rulesTitle">SZABÁLYZAT</h1>
+        <div class="container">
+            <div class="column" data-aos="fade-right">
+                <h5 id="Rules1">Menüben navigálás </h5>
+                <p id="RulesText1">A menüben a ↑ ↓ ENTER gombokkal lehet navigálni, valamint az ESC gombbal eggyel vissza lehet menni (vagy kilépni).</p>
+                <h5 id="Rules2">Térkép szerkesztőben irányítás </h5>
+                <p id="RulesText2">A térkép szerkesztőben alapból a ↑ ↓ → ← gombokkal lehet mozogni. Az elemeket az alattuk látható karakterekkel lehet kiválasztani. Forgatni a + - gombokkal lehet a kiválasztott pálya elemeket, lerakni pedig az ENTER-el. Ha kész a pálya, akkor csak meg kell nyomni az ESC-t, és ha szabályosan lett megcsinálva, akkor el is lehet menteni.</p>
+                <h5 id="Rules3">Játékban irányítás</h5>
+                <p id="RulesText3"> A játéban az irányítás alapból a ↑ ↓ → ← gombokkal működik. A játék célja, a lehető legtöbb kincses terembe való eljutás (majd kijutás). A játék nehézségét lehet fokozni <abbr title="A pályának csak az a része látható ahol már volt a játékos">fedett térképpel</abbr>, <abbr title="A játék elején látható az egész labirintus">fényvesztővel</abbr>, <abbr title="A pályából csak a játékost, a kincses termeket, és azt a mezőt amelyiken a játékos áll lehet látni">vaksággal</abbr></p>
+            </div>
+        </div>
+    </div>
+    <p id="TP2"></p><br>
+    <h1 data-aos="fade-up" id="kozepre">Játék és szerkesztő bemutatása</h1>
+    <div class="slideshow-container" data-aos="fade-up">
+
+
+        <div class="mySlidesfade">
+            <div class="numbertext">1 / 6</div>
+            <img src="Images/game1.jpg" style="width:100%; border-radius: 5%;">
+            <div class="text2" id="SlidesText1">SAJÁT LABIRINTUS SZERKESZTÉSE: A labirintus szélessége és magassága (a képen 20;10) megadása után a nyilakkal lehet mozogni (legalább 1 kincses termet muszáj rakni, hogy szabályos legyen).</div>
+        </div>
+
+        <div class="mySlidesfade">
+            <div class="numbertext">2 / 6</div>
+            <img src="Images/game2.jpg" style="width:100%; border-radius: 5%;">
+            <div class="text2" id="SlidesText2">LABIRINTUS GENERÁLÁSA: A labirintus szélessége és magassága (a képen 30;15) megadása után meg kell még adni a kezdőkoordinátát, a pálya közepe az ajánlott (ezt majd kiírja a program). Ezután lehet tovább módosítani még a labirintuson (legalább 1 kincses termet muszáj rakni, hogy szabályos legyen).</div>
+        </div>
+
+        <div class="mySlidesfade">
+            <div class="numbertext">3 / 6</div>
+            <img src="Images/game3.jpg" style="width:100% ; border-radius: 5%;">
+            <div class="text2"  id="SlidesText3">MEGLÉVŐ LABIRINTUSON MÓDOSÍTÁS: Azzal kezdődik, hogy meg kell egy létező labirintus nevét (nem kell elérési út, se kiterjesztés, csak a labirintus neve).</div>
+        </div>
+        <div class="mySlidesfade">
+            <div class="numbertext">4 / 6</div>
+            <img src="Images/jatek1.png" style="width:100% ; border-radius: 5%;">
+            <div class="text2"  id="SlidesText4">A JÁTÉK MENETE: A pálya neve után megadva betölti a pályát, amely mellett különböző adatok találhatóak. A kincses termek felfedezése után ki lehet menni a pályáról, ezáltal megnyerni a játékot.</div>
+        </div>
+        <div class="mySlidesfade">
+            <div class="numbertext">5 / 6</div>
+            <img src="Images/jatek2.png" style="width:100% ; border-radius: 5%;">
+            <div class="text2"  id="SlidesText5">KÜLÖNBÖZŐ JÁTÉKMÓDOK:a fényvesztés, melyben elsötétülnek a járatok, melyekben már jártunk, vagy pont az ellentéte ennek.</div>
+        </div>
+        <div class="mySlidesfade">
+            <div class="numbertext">6 / 6</div>
+            <img src="Images/jatek3.png" style="width:100% ; border-radius: 5%;">
+            <div class="text2"  id="SlidesText6">Különböző adatokat le lehet olvasni a pálya mellett található információs mezőben, melyben megtalálható a pálya mérete, hogy melyik irányokba tudunk menni és a felfedezett termek száma..</div>
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <br>
+
+
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+    </div>
+    <div class="meettheteam" >
+        <p id="TP3"></p><br>
+        <h2 style="text-align:center" id="Teamh2" data-aos="fade-right">Munkafelosztás</h2>
+        <div class="row">
+            <div class="column_team" >
+                <div class="card" data-aos="fade-up">
+                    <img src="Images/team2.png" style="width: 100%"  >
+                   
+                        <h2>Hegedűs Gergő<br><span id="AboutTheTeam1">Játékprogram</span></h2>
+                  
+                </div>
+            </div>
+
+            <div class="column_team">
+                <div class="card" data-aos="fade-up">
+                    <img src="Images/team1.png" style="width: 100%">
+                   
+                        <h2>Majoros Péter<br><span id="AboutTheTeam2">Pályaszerkesztő</span></h2>
+                  
+                </div>
+            </div>
+
+            <div class="column_team">
+                <div class="card" data-aos="fade-up">
+                    <img src="Images/team3.png" style="width: 100%">
+                    
+                        <h2>Stiegelmayer Bálint<br><span id="AboutTheTeam3">Metódusok, Weboldal</span></h2>
+              
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <br>
+</body>
+
+<footer class="footer">
+    <div class="footer_addr">
+
+
+        <h2>Contact</h2>
+
+        <address>
+          <br>
+            <a class="footer_btn">Contact Us:</a>
+            <p>PHONE NUMBER:
+                +36 52 422 224</p>
+
+
+
+        </address>
+    </div>
+
+    <ul class="footer_nav">
+       
+
+        <li class="nav_item nav_item--extra">
+            <h2 class="nav_title">Partners</h2>
+
+            <ul class="nav_ul nav_ul--extra">
+                <li>
+                    <a>Partner1</a>
+                </li>
+
+                <li>
+                    <a>Partner2</a>
+                </li>
+
+                <li>
+                    <a>Partner3</a>
+                </li>
+
+                <li>
+                    <a>Partner4</a>
+                </li>
+
+                <li>
+                    <a>Partner5</a>
+                </li>
+
+
+            </ul>
+        </li>
+
+        <li class="nav_item">
+            <h2 class="nav_title">Legal</h2>
+
+            <ul class="nav_ul">
+                <li>
+                    <a href="#">Privacy Policy</a>
+                </li>
+
+                <li>
+                    <a href="#">Terms of Use</a>
+                </li>
+
+
+            </ul>
+        </li>
+    </ul>
+
+    <div class="legal">
+        <p>&copy Copyright 2023 </p>
+    </div>
+</footer>
+<script src="java.js"></script>
+
+</html>

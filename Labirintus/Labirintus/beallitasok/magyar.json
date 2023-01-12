@@ -1,0 +1,116 @@
+{
+  "Cim": [
+    "Labirintus",
+    "Labirintus Készítő",
+    "Labirintus Játék",
+    "Beállítások",
+    "Nyelv Beállítások",
+    "Szín Beállítások",
+    "Gomb Beállítások",
+    "Nehezítések"
+  ],
+  "Kilepes": "Kilépés",
+  "Vissza": "Vissza",
+  "Inditas": "Játék indítása",
+  "Szerkesztes": "Pálya szerkesztése",
+  "Beallitas": "Beállítások",
+  "Sajat": "Saját labirintus készítése",
+  "General": "Labirintus generálása",
+  "Modositas": "Meglévő labirintuson módosítás",
+  "BekerMeret": "Adja meg a pálya méretét ;-vel elválasztva (szélesség;magasság): ",
+  "BekerKoord": [
+    "Adja meg a pálya kezdő koordinátáját ;-vel elválasztva",
+    "ajánlott"
+  ],
+  "BekerPalyaNev": [
+    "Adja meg a pálya nevét a mentéshez: ",
+    "Adja meg a pálya nevét amin változtatni szeretne: ",
+    "Adja meg a pálya nevét a betöltéséhez: "
+  ],
+  "LetezoPalya": "Ilyen nevű pálya már létezik, biztosan felül akarod írni (I/N)?",
+  "SikeresMentes": "Sikeres Mentés!",
+  "Hiba": "Nem jó formában adta meg!",
+  "NyelvBeallitas": "Nyelv",
+  "NyelvAtallitas": "Nyelv átállítása angolra",
+  "SzinBeallitas": "Szín",
+  "Alapertelmezett": "Visszaállítás",
+  "SzinezhetoDolgok": [
+    "Labirintus keretének színe",
+    "Labirintus színe",
+    "Üres hely színe",
+    "Kiválasztott elem színe",
+    "Elemek színe",
+    "Elemek keretének színe",
+    "Bejart labirintus színe",
+    "Elemek sorszámának színe",
+    "Szöveg színe"
+  ],
+  "SikeresBeallit": [
+    "Színek sikeresen visszaállítva!",
+    "Nyelv sikeresen átállítva angolra! Újraindítás szükséges!",
+    "Gombok sikeresen visszaállítva!"
+  ],
+  "Szinek": [
+    "fekete",
+    "sötétkék",
+    "sötétzöld",
+    "sötétcián",
+    "sötétpiros",
+    "sötétmagenta",
+    "sötétsárga",
+    "szürke",
+    "sötétszürke",
+    "kék",
+    "zöld",
+    "cián",
+    "piros",
+    "magenta",
+    "sárga",
+    "fehér"
+  ],
+  "GombBeallitas": "Gomb",
+  "Gombok": [
+    "Fel gomb",
+    "Le gomb",
+    "Bal gomb",
+    "Jobb gomb",
+    "Elem0 gomb",
+    "Elem1 gomb",
+    "Elem2 gomb",
+    "Elem3 gomb",
+    "Elem4 gomb",
+    "Elem5 gomb",
+    "Forgat1 gomb",
+    "Forgat2 gomb",
+    "Lerak gomb",
+    "Kilep gomb"
+  ],
+  "GombBeker": [
+    "A '",
+    "'-hoz a(z) '",
+    "' gomb van hozzáadva.",
+    "Nyomj egy gombot!",
+    "'-hoz mostmár a(z) '"
+  ],
+  "AlapJatek": "Alap játék",
+  "Nehezitesek": [
+    "Fedett térkép",
+    "Fényvesztés",
+    "Vakság"
+  ],
+  "Informaciok": [
+    "Pálya neve",
+    "Pálya mérete",
+    "Ebbe az irányba mehetsz:",
+    "Felfedezett kincses termek száma"
+  ],
+  "Iranyok": [
+    " É",
+    " D",
+    " Ny",
+    " K"
+  ],
+    "VakVagy": " Vak vagy",
+    "Gratulalok":  "Gratulálok! Kivitted a játékot!"
+      
+}
